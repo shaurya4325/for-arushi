@@ -567,7 +567,7 @@
     const l = document.createElement('span');
     l.className = 'lips extra';
     l.textContent = '💋';
-    l.style.cssText = `left:${rand(4, 82).toFixed(1)}%;top:${rand(6, 88).toFixed(1)}%;rotate:${rand(-35, 35).toFixed(0)}deg;font-size:${rand(34, 60).toFixed(0)}px`;
+    l.style.cssText = `left:${rand(4, 68).toFixed(1)}%;top:${rand(6, 88).toFixed(1)}%;rotate:${rand(-35, 35).toFixed(0)}deg;font-size:${rand(34, 60).toFixed(0)}px`;
     bletter.appendChild(l);
     burst(e.clientX, e.clientY, 10, 80);
     letterKisses++;
