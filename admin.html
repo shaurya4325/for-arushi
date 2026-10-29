@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>her little diary 📖</title>
+<meta name="robots" content="noindex, nofollow, noimageindex">
+<meta name="theme-color" content="#ffdbe5">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fredoka:wght@400;500;600;700&family=Great+Vibes&display=swap">
+<style>
+  :root {
+    --ink: #4a1730; --ink2: #7a3655; --cherry: #d8285e; --rose: #ff5d8f; --blush: #ffe1ea;
+    --paper: #fffaf3; --coffee: #4a2c1a;
+    --script: 'Great Vibes', cursive; --hand: 'Caveat', cursive; --ui: 'Fredoka', system-ui, sans-serif;
+    --spring: cubic-bezier(.3, 1.55, .5, 1); --ease: cubic-bezier(.2, .8, .2, 1);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--ui);
+    color: var(--ink);
+    background: radial-gradient(90% 60% at 50% 0%, #fff3f6 0%, rgba(255, 243, 246, 0) 70%), linear-gradient(180deg, #ffe6ee, #ffe9df);
+    background-attachment: fixed;
+  }
+  button, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--rose); outline-offset: 3px; border-radius: 10px; }
+  .glass { background: rgba(255, 255, 255, .5); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, .8); box-shadow: 0 10px 34px rgba(216, 40, 94, .12), inset 0 1px 0 #fff; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 40px 16px 80px; }
+  [hidden] { display: none !important; }
+
+  /* sign in */
+  .login { display: grid; place-items: center; min-height: 100vh; padding: 24px 16px; }
+  .login-card { width: min(420px, 100%); padding: 34px 28px 28px; border-radius: 32px; text-align: center; }
+  .lock { font-size: 54px; line-height: 1; animation: bob 3s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(-6px) rotate(-4deg); } }
+  .login h1 { margin: 10px 0 2px; font-family: var(--script); font-weight: 400; font-size: 52px; line-height: 1; color: var(--cherry); }
+  .login p { margin: 0 0 22px; font-family: var(--hand); font-size: 23px; color: var(--ink2); }
+  .field { display: block; width: 100%; margin-bottom: 12px; padding: 14px 18px; border: 0; border-radius: 18px; background: var(--blush); box-shadow: inset 5px 5px 10px #ecb9c9, inset -5px -5px 10px #fff8fb; font-size: 16px; }
+  .btn { padding: 14px 26px; border: 0; border-radius: 999px; font-size: 17px; font-weight: 600; color: #fff; background: linear-gradient(135deg, #ff4f87, #ff8f6b); box-shadow: 0 12px 26px rgba(216, 40, 94, .35), inset 0 2px 5px rgba(255, 255, 255, .45); cursor: pointer; transition: transform .25s var(--spring); }
+  .btn:hover { transform: scale(1.04); }
+  .btn.small { padding: 9px 16px; font-size: 14px; }
+  .btn.ghost { color: var(--cherry); background: #fff0f4; box-shadow: 0 6px 14px rgba(216, 40, 94, .14); }
+  .err { min-height: 1.4em; margin: 12px 0 0 !important; font-size: 15px !important; font-family: var(--ui) !important; color: var(--cherry) !important; }
+
+  /* diary */
+  .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
+  .top h1 { margin: 0; font-family: var(--script); font-weight: 400; font-size: clamp(54px, 8vw, 84px); line-height: .95; color: var(--cherry); }
+  .top p { margin: 6px 0 0; max-width: 36ch; font-family: var(--hand); font-size: 24px; line-height: 1.15; color: var(--ink2); }
+  .live { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #1b8a5a; background: #e3f8ee; }
+  .live i { width: 8px; height: 8px; border-radius: 50%; background: #22b573; animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(34, 181, 115, 0); } 0% { box-shadow: 0 0 0 0 rgba(34, 181, 115, .5); } }
+  .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
+  .tools label { display: inline-flex; align-items: center; gap: 6px; margin-right: auto; font-size: 14px; color: var(--ink2); cursor: pointer; }
+  .tools input { accent-color: var(--cherry); width: 16px; height: 16px; }
+  .pw { display: flex; gap: 8px; margin-top: 10px; }
+  .pw .field { margin: 0; padding: 10px 14px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin: 28px 0 8px; }
+  .stat { padding: 16px; border-radius: 24px; background: var(--blush); box-shadow: 8px 8px 18px #ecb9c9, -8px -8px 18px #fff8fb; }
+  .stat b { display: block; font-size: 34px; font-weight: 600; line-height: 1; color: var(--cherry); }
+  .stat span { display: block; margin-top: 6px; font-size: 13.5px; color: var(--ink2); }
+
+  h2 { margin: 44px 0 14px; font-size: 28px; font-weight: 600; }
+  h2 .s { font-family: var(--script); font-weight: 400; font-size: 1.35em; color: var(--cherry); }
+  .words { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .word {
+    position: relative;
+    padding: 22px 20px 16px;
+    border-radius: 6px;
+    color: var(--coffee);
+    background: #f2e0bd radial-gradient(ellipse at 15% 10%, rgba(255, 250, 235, .75), transparent 55%);
+    box-shadow: inset 0 0 40px rgba(120, 72, 35, .28), 0 14px 28px rgba(90, 40, 20, .18);
+    rotate: var(--r, -1deg);
+    animation: drop .6s var(--spring) both;
+  }
+  .word .k { font-size: 12.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #8a2b1f; }
+  .word p { margin: 6px 0 10px; font-family: var(--hand); font-size: 27px; line-height: 1.12; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .word time { font-size: 13px; color: #6b4a33; }
+  .empty { padding: 26px; border-radius: 24px; text-align: center; font-family: var(--hand); font-size: 24px; color: var(--ink2); }
+
+  .visit { margin-bottom: 18px; padding: 18px 18px 8px; border-radius: 28px; animation: drop .6s var(--spring) both; }
+  .visit-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 6px; }
+  .visit-h b { font-size: 18px; font-weight: 600; }
+  .visit-h span { font-size: 14px; color: var(--ink2); }
+  .tag { padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #fff; background: #b79cff; }
+  ol { margin: 0; padding: 0; list-style: none; }
+  li { display: grid; grid-template-columns: 74px 30px 1fr; gap: 8px; align-items: start; padding: 9px 4px; border-top: 1px dashed rgba(216, 40, 94, .18); }
+  li time { padding-top: 3px; font-size: 13px; color: var(--ink2); font-variant-numeric: tabular-nums; }
+  li .e { font-size: 21px; line-height: 1.2; text-align: center; }
+  li .t { font-size: 16px; line-height: 1.4; }
+  li .q { display: block; margin-top: 2px; font-family: var(--hand); font-size: 22px; line-height: 1.15; color: var(--cherry); white-space: pre-wrap; overflow-wrap: anywhere; }
+  li.new { animation: glow 2.4s ease; }
+  @keyframes glow { 0%, 40% { background: rgba(255, 143, 171, .3); } }
+  @keyframes drop { from { opacity: 0; transform: translateY(18px) scale(.97); } }
+
+  .toast { position: fixed; left: 50%; top: 16px; z-index: 50; width: max-content; max-width: calc(100vw - 32px); padding: 12px 20px; border-radius: 24px; font-weight: 500; text-align: center; translate: -50% -160%; transition: translate .5s var(--spring); }
+  .toast.show { translate: -50% 0; }
+  .foot { margin-top: 40px; text-align: center; font-family: var(--hand); font-size: 22px; color: var(--ink2); }
+  @media (max-width: 560px) {
+    li { grid-template-columns: 62px 26px 1fr; }
+    .tools label { flex-basis: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<section class="login" id="login" hidden>
+  <form class="login-card glass" id="loginForm">
+    <div class="lock">🔐</div>
+    <h1>her little diary</h1>
+    <p>only for shaurya. everything she does, written down with love.</p>
+    <label class="sr" for="email" hidden>email</label>
+    <input class="field" id="email" type="email" autocomplete="username" value="shaurya4325@gmail.com" required>
+    <input class="field" id="pass" type="password" autocomplete="current-password" placeholder="password" required>
+    <button class="btn" type="submit">open her diary 💌</button>
+    <p class="err" id="err" aria-live="polite"></p>
+  </form>
+</section>
+
+<main class="wrap" id="diary" hidden>
+  <div class="top">
+    <div>
+      <h1>her little diary</h1>
+      <p>every sweet thing arushi does on her birthday site, lovingly written down for you ♡</p>
+    </div>
+    <span class="live"><i></i>live</span>
+  </div>
+  <div class="tools">
+    <label><input type="checkbox" id="showMine"> show my own previews 👀</label>
+    <button class="btn small ghost" id="pwBtn">change password</button>
+    <button class="btn small ghost" id="clearBtn">clear everything</button>
+    <button class="btn small ghost" id="outBtn">sign out</button>
+  </div>
+  <form class="pw" id="pwForm" hidden>
+    <input class="field" id="newPw" type="password" minlength="6" placeholder="new password (6+ characters)" autocomplete="new-password" required>
+    <button class="btn small" type="submit">save</button>
+  </form>
+
+  <div class="stats" id="stats"></div>
+
+  <h2>her <span class="s">words</span></h2>
+  <div class="words" id="words"></div>
+
+  <h2>everything, <span class="s">moment by moment</span></h2>
+  <div id="timeline"></div>
+  <p class="foot">she's the best thing that ever happened to you. don't forget it ♡</p>
+</main>
+
+<div class="toast glass" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updatePassword } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import { getFirestore, collection, query, orderBy, limit, onSnapshot, writeBatch, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+  const app = initializeApp({
+    apiKey: 'AIzaSyBCjYwL24hcrNjRDzrPwMiKBBccWgt1ZI8',
+    authDomain: 'anniversay.firebaseapp.com',
+    projectId: 'anniversay',
+    appId: '1:1079143908087:web:bd54672e09fbd49d4c89f2',
+  });
+  const auth = getAuth(app), db = getFirestore(app);
+  const $ = s => document.querySelector(s);
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+
+  let toastT;
+  function toast(msg, ms = 3200) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(() => t.classList.remove('show'), ms);
+  }
+
+  // how each thing she did is said out loud
+  const q = s => `“${s}”`;
+  const SAY = {
+    visit: e => e.detail === 'gate' ? ['🎁', 'she opened the link early and found the wrapped gift'] : ['✨', 'she opened her birthday site'],
+    gift_peek: e => ['🙈', `she tried to peek at the gift (shake #${e.detail})`],
+    gate_open: () => ['🎀', 'she unwrapped her surprise'],
+    lights_on: () => ['💡', 'she pulled the cord and turned on the lights. alfaaz started'],
+    mic_on: () => ['🎤', 'she turned on her mic to blow the candles out for real'],
+    candle: e => ['🕯️', `she blew out the “${e.text}” candle ${e.detail === 'mic' ? 'with a real breath 🌬️' : 'with a tap'}`],
+    cake_done: () => ['🎂', 'every candle out. she made her birthday wish ✨'],
+    enter: () => ['🌅', 'she stepped into her birthday site'],
+    letter_open: () => ['💌', 'she broke the seal on your letter'],
+    letter_kiss: e => ['💋', e.detail === '1' ? 'she kissed your letter' : `she kissed your letter again (kiss #${e.detail})`],
+    reply: () => ['✍️', 'she wrote back to you'],
+    photo: e => ['📸', `she opened the photo ${q(e.text)}`],
+    tab: e => ['💖', `she looked at ${q(e.text)}`],
+    game: e => ['🎮', `she picked ${q(e.text)}`],
+    balloon: e => ['🎈', `she popped balloon ${e.detail} and read ${q(e.text)}`],
+    balloons_all: () => ['🎉', 'she popped all 9 balloons'],
+    scratch_done: () => ['🎁', 'she scratched her gift card: one boyfriend, lifetime warranty'],
+    pairs_win: e => ['🃏', `she found every pair in ${e.detail} moves`],
+    openwhen: e => ['✉️', `she opened ${q(e.text)}`],
+    measure: () => ['🧪', 'she measured your love. the heart exploded 💥'],
+    coupon: e => ['🎟️', e.detail === 'redeemed' ? `she redeemed ${q(e.text)}. time to pay up 😌` : `she gave back ${q(e.text)}`],
+    wish: () => ['🏮', 'she sent a wish up to the sky'],
+    kiss: e => ['💋', `she sent you a birthday kiss (#${e.detail})`],
+    heart: e => ['💗', `she popped a floating heart: ${q(e.text)}`],
+    float_balloon: e => ['🎈', `she popped a floating balloon: ${q(e.text)}`],
+    mood: () => ['🥹', 'she told you how her heart feels'],
+    song: e => ['🎵', e.detail === 'play' ? 'alfaaz is playing' : 'she paused alfaaz'],
+  };
+  const WORDS = { wish: 'her wish 🏮', reply: 'her letter to you ✍️', mood: 'her heart right now 🥹' };
+  const say = e => (SAY[e.type] || (() => ['♡', `${e.type} ${e.text}`]))(e);
+
+  const fmtTime = new Intl.DateTimeFormat('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true });
+  const fmtDay = new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+  const fmtFull = new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
+  const when = e => e.at ? e.at.toDate() : new Date(e.clientAt);
+  const low = s => s.replace('AM', 'am').replace('PM', 'pm');
+
+  let all = [], first = true, seen = new Set(), unsub = null;
+
+  function render() {
+    const showMine = $('#showMine').checked;
+    const list = all.filter(e => showMine || !String(e.session).startsWith('p-'));
+    const count = t => list.filter(e => e.type === t).length;
+    const sessions = new Set(list.filter(e => e.type === 'visit').map(e => e.session));
+    const redeemed = new Set();
+    [...list].sort((a, b) => when(a) - when(b)).forEach(e => { if (e.type === 'coupon') e.detail === 'redeemed' ? redeemed.add(e.text) : redeemed.delete(e.text); });
+
+    const stats = $('#stats');
+    stats.replaceChildren(...[
+      [sessions.size, 'visits ✨'],
+      [count('letter_open'), 'letters opened 💌'],
+      [count('kiss') + count('letter_kiss'), 'kisses for you 💋'],
+      [count('wish'), 'wishes sent 🏮'],
+      [redeemed.size, 'coupons to honour 🎟️'],
+      [count('balloon') + count('heart') + count('float_balloon'), 'things she popped 🎈'],
+    ].map(([n, label]) => { const d = el('div', 'stat'); d.append(el('b', '', n), el('span', '', label)); return d; }));
+
+    const words = $('#words');
+    const ws = list.filter(e => WORDS[e.type]);
+    words.replaceChildren(...(ws.length ? ws.map((e, i) => {
+      const d = el('article', 'word');
+      d.style.setProperty('--r', `${[-1.2, .8, -.4, 1.1][i % 4]}deg`);
+      d.append(el('span', 'k', WORDS[e.type]), el('p', '', e.text), el('time', '', low(fmtFull.format(when(e)))));
+      return d;
+    }) : [el('p', 'empty glass', "nothing yet. when she writes a wish or a reply, it'll show up here ♡")]));
+
+    const bySession = new Map();
+    for (const e of list) {
+      if (!bySession.has(e.session)) bySession.set(e.session, []);
+      bySession.get(e.session).push(e);
+    }
+    const groups = [...bySession.values()].map(g => g.sort((a, b) => when(a) - when(b))).sort((a, b) => when(b[0]) - when(a[0]));
+    const tl = $('#timeline');
+    tl.replaceChildren(...(groups.length ? groups.map(g => {
+      const v = el('section', 'visit glass');
+      const h = el('div', 'visit-h');
+      const start = when(g[0]), mins = Math.max(1, Math.round((when(g[g.length - 1]) - start) / 60000));
+      h.append(el('b', '', `${low(fmtDay.format(start))}, ${low(fmtTime.format(start))}`), el('span', '', `on her ${g[0].device} · stayed ~${mins} min · ${g.length} moments`));
+      if (String(g[0].session).startsWith('p-')) h.append(el('span', 'tag', 'your preview'));
+      const ol = el('ol');
+      for (const e of g) {
+        const [emo, line] = say(e);
+        const li = el('li');
+        if (!first && !seen.has(e.id)) li.classList.add('new');
+        const t = el('span', 't', line);
+        if (WORDS[e.type]) t.append(el('span', 'q', e.text));
+        li.append(el('time', '', low(fmtTime.format(when(e)))), el('span', 'e', emo), t);
+        ol.append(li);
+      }
+      v.append(h, ol);
+      return v;
+    }) : [el('p', 'empty glass', "she hasn't opened it yet. soon ♡")]));
+    all.forEach(e => seen.add(e.id));
+  }
+
+  function watch() {
+    unsub = onSnapshot(query(collection(db, 'logs'), orderBy('at', 'desc'), limit(1500)), snap => {
+      all = snap.docs.map(d => ({ id: d.id, ...d.data({ serverTimestamps: 'estimate' }) }));
+      if (!first) {
+        const fresh = snap.docChanges().filter(c => c.type === 'added').map(c => ({ id: c.doc.id, ...c.doc.data({ serverTimestamps: 'estimate' }) }));
+        const hers = fresh.find(e => !String(e.session).startsWith('p-'));
+        if (hers) {
+          toast(`${say(hers)[0]} ${say(hers)[1]}`);
+          document.title = '💗 she did something!';
+          setTimeout(() => { document.title = 'her little diary 📖'; }, 5000);
+        }
+      }
+      render();
+      first = false;
+    }, err => toast(`couldn't load: ${err.code || err.message}`, 5000));
+  }
+
+  onAuthStateChanged(auth, user => {
+    $('#login').hidden = !!user;
+    $('#diary').hidden = !user;
+    if (user && !unsub) watch();
+    if (!user && unsub) { unsub(); unsub = null; first = true; }
+  });
+  $('#loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    $('#err').textContent = '';
+    try { await signInWithEmailAndPassword(auth, $('#email').value.trim(), $('#pass').value); }
+    catch { $('#err').textContent = "hmm, that's not it. try again, mister 🙈"; }
+  });
+  $('#outBtn').addEventListener('click', () => signOut(auth));
+  $('#showMine').addEventListener('change', render);
+  $('#pwBtn').addEventListener('click', () => { $('#pwForm').hidden = !$('#pwForm').hidden; });
+  $('#pwForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    try { await updatePassword(auth.currentUser, $('#newPw').value); $('#newPw').value = ''; $('#pwForm').hidden = true; toast('password changed 🔐'); }
+    catch (err) { toast(err.code === 'auth/requires-recent-login' ? 'sign out and back in first, then try again' : 'that password didn\'t work (6+ characters)', 4000); }
+  });
+  $('#clearBtn').addEventListener('click', async () => {
+    if (!confirm('delete every entry in her diary? this cannot be undone.')) return;
+    const docs = (await getDocs(collection(db, 'logs'))).docs;
+    for (let i = 0; i < docs.length; i += 400) {
+      const b = writeBatch(db);
+      docs.slice(i, i + 400).forEach(d => b.delete(d.ref));
+      await b.commit();
+    }
+    toast('cleared. a fresh new diary 📖');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>happy birthday arushi 🎂</title>
+<meta name="description" content="a tiny corner of the internet, made only for arushi, for her birthday.">
+<meta name="robots" content="noindex, nofollow, noimageindex">
+<meta name="theme-color" content="#ffdbe5">
+<meta name="color-scheme" content="light">
+<link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%82%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fredoka:wght@400;500;600;700&family=Great+Vibes&family=VT323&display=swap">
+<link rel="stylesheet" href="style.css?v=3">
+<link rel="preload" as="image" href="img/t/p8.webp">
+</head>
+<body class="locked">
+
+<canvas id="hearts" aria-hidden="true"></canvas>
+<div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<!-- before 9 nov, 12:00 am: a wrapped gift and a countdown -->
+<div class="gate" id="gate" hidden>
+  <p class="gate-kicker" id="gateKicker">shhh… 🤫</p>
+  <h1 class="gate-title" id="gateTitle">your surprise is still being <span class="s">wrapped</span></h1>
+  <button class="gift" id="gift" aria-label="your wrapped gift. no peeking">
+    <span class="gift-lid"><span class="bow" aria-hidden="true"></span></span>
+    <span class="gift-box" aria-hidden="true"></span>
+  </button>
+  <div class="gate-count" id="gateCount">
+    <div><b id="gD">0</b><span>days</span></div>
+    <div><b id="gH">00</b><span>hours</span></div>
+    <div><b id="gM">00</b><span>minutes</span></div>
+    <div><b id="gS">00</b><span>seconds</span></div>
+  </div>
+  <p class="gate-note" id="gateNote">it opens on <b>9th november, 12:00 am</b>. not one second earlier, ma'am 😌</p>
+  <button class="gate-open" id="gateOpen" hidden>open your surprise 🎁</button>
+</div>
+
+<!-- birthday intro: a dark room, a cord, a cake with her name on the candles -->
+<div class="intro" id="intro">
+  <svg class="fairy" id="fairy" aria-hidden="true"></svg>
+  <button class="cord" id="cord" aria-label="pull the cord to turn on the lights"><span class="cord-line"></span><span class="cord-knob">♥</span></button>
+  <div class="dark-copy">
+    <p class="dark-1">it's so dark in here… 🙈</p>
+    <p class="dark-2">turn your volume up 🔊 and pull the cord</p>
+  </div>
+  <div class="party">
+    <p class="party-top" id="partyTop">make a wish, kuchu puchu… 🤍</p>
+    <div class="cake" id="cake">
+      <div class="candles" id="candles"></div>
+      <div class="tier t2"><i></i></div>
+      <div class="tier t1"><i></i></div>
+      <div class="plate"></div>
+    </div>
+    <p class="party-hint" id="partyHint">close your eyes, wish, then blow out your candles 🕯️</p>
+    <div class="party-actions" id="partyActions">
+      <button class="btn-mic" id="micBtn" hidden>🎤 blow for real</button>
+      <span class="or" id="orTap">or tap each flame</span>
+    </div>
+    <h2 class="hb" id="hb">happy birthday, <span>Arushi</span></h2>
+    <p class="hb-tap" id="hbTap">tap anywhere to open your birthday ✨</p>
+  </div>
+</div>
+
+<main>
+
+  <!-- hero: her name at sunrise, her pictures floating around it -->
+  <section class="hero" id="home">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="collage" id="collage"></div>
+    <div class="hero-center">
+      <svg class="arch" viewBox="0 0 440 118" aria-hidden="true">
+        <path id="archPath" d="M30 112 Q220 -22 410 112" fill="none"/>
+        <text><textPath href="#archPath" startOffset="50%" text-anchor="middle">happy birthday</textPath></text>
+      </svg>
+      <div class="crown" id="crown" aria-hidden="true"></div>
+      <h1 class="name" id="name"><span class="sr">happy birthday, </span>Arushi</h1>
+      <p class="meaning">arushi means <em>the first light of dawn</em>. and on 9th november, the world got its brightest one. happy birthday, my love 🎂</p>
+      <div class="typer glass" aria-live="polite"><span id="typed">happy birthday, my kuchu puchu 🎂</span><span class="caret"></span></div>
+      <p class="drag-hint">drag the pictures around · tap one to open it ♡</p>
+    </div>
+  </section>
+
+  <!-- the birthday letter: coffee-stained paper, kraft envelope, a latte on the table -->
+  <section class="sec letter-sec" id="letter">
+    <div class="beans" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 class="sec-title rv">your birthday <span class="s">letter</span></h2>
+      <p class="sec-sub rv">written slowly, over coffee, with way too much love. no insta caption could ever hold this, so it lives here, only for you. tap the seal ♡</p>
+      <div class="env-stage rv" id="envStage">
+        <div class="envelope" id="envelope">
+          <div class="env-back"></div>
+          <div class="letter">
+            <img src="img/t/p8.webp" alt="arushi smiling">
+            <p class="l1">happy birthday babyyy 🥺</p>
+            <p class="l2">read this slowly, okayy? every word is true.</p>
+          </div>
+          <div class="env-front"></div>
+          <div class="env-flap"></div>
+          <button class="seal" id="seal" aria-label="open your birthday letter">A</button>
+        </div>
+        <p class="env-hint">for: my birthday girl 💌</p>
+      </div>
+      <article class="bletter" id="bletter" hidden>
+        <div class="cup" aria-hidden="true"><i class="steam"></i><i class="steam"></i><i class="steam"></i><b class="latte">♥</b></div>
+        <p class="bl-date" id="blDate">9th november</p>
+        <figure class="bl-photo"><img src="img/t/p8.webp" alt="arushi smiling"><figcaption>my birthday girl 🥹</figcaption></figure>
+        <div class="bl-body" id="blBody"></div>
+        <p class="bl-sign">all yours, only yours,<span>shaurya ♡</span></p>
+        <p class="bl-ps">p.s. i'm probably staring at my phone right now, waiting for your reply 🥺</p>
+        <span class="lips lp1" aria-hidden="true">💋</span><span class="lips lp2" aria-hidden="true">💋</span><span class="lips lp3" aria-hidden="true">💋</span>
+        <button class="bl-again" id="blAgain">kiss the letter 💋</button>
+      </article>
+      <form class="reply" id="reply" hidden>
+        <p class="reply-top">your turn. write back to me ✍️</p>
+        <label class="sr" for="replyIn">your reply to shaurya</label>
+        <textarea id="replyIn" maxlength="1000" rows="5" placeholder="dear shaurya…"></textarea>
+        <div class="reply-row">
+          <span class="reply-note">this one goes straight to me 🤍</span>
+          <button type="submit">seal it &amp; send 💌</button>
+        </div>
+        <p class="reply-sent" id="replySent" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- neumorphism: the counter -->
+  <section class="sec neu-sec" id="us">
+    <div class="wrap">
+      <h2 class="sec-title rv">us, since <span class="s">7th august</span></h2>
+      <p class="sec-sub rv">every second since then has been my favourite.</p>
+      <div class="dials rv">
+        <div class="dial"><b id="cD">0</b><span>days</span></div>
+        <div class="dial"><b id="cH">0</b><span>hours</span></div>
+        <div class="dial"><b id="cM">0</b><span>minutes</span></div>
+        <div class="dial"><b id="cS">0</b><span>seconds</span></div>
+      </div>
+      <div class="neu-row">
+        <div class="neu-card rv">
+          <div class="neu-icon"><span class="beat">💗</span></div>
+          <p>my heart has beaten about <b id="beats">…</b> times since that day. pretty sure every single one was for you.</p>
+        </div>
+        <div class="neu-card rv">
+          <div class="neu-icon">🌙</div>
+          <p id="monthText">our next monthiversary is coming up. yes, i'm counting. obviously.</p>
+        </div>
+        <div class="neu-card rv" id="bdayCard">
+          <div class="neu-icon">🎂</div>
+          <p id="bdayText">today the biggest happiness of my life was born.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- glass + liquid tabs: things i'm obsessed with -->
+  <section class="sec tabs-sec" id="obsessed">
+    <div class="tabs-blob a" aria-hidden="true"></div>
+    <div class="tabs-blob b" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 class="sec-title rv">things i'm completely <span class="s">obsessed</span> with</h2>
+      <p class="sec-sub rv">pick one. (i couldn't, so i wrote about all of them.)</p>
+      <div class="tabbar glass rv" role="tablist" aria-label="things i love about you">
+        <span class="tab-ind" aria-hidden="true"></span>
+        <button role="tab" id="t-smile" aria-controls="p-smile" aria-selected="true">your smile</button>
+        <button role="tab" id="t-eyes" aria-controls="p-eyes" aria-selected="false" tabindex="-1">those eyes</button>
+        <button role="tab" id="t-silly" aria-controls="p-silly" aria-selected="false" tabindex="-1">silly you</button>
+        <button role="tab" id="t-desi" aria-controls="p-desi" aria-selected="false" tabindex="-1">desi you</button>
+        <button role="tab" id="t-lil" aria-controls="p-lil" aria-selected="false" tabindex="-1">lil you</button>
+      </div>
+
+      <div class="panels">
+        <div class="panel active" role="tabpanel" id="p-smile" aria-labelledby="t-smile">
+          <div class="stack" data-photos="p94|that smile 🥹;p14|my favourite view;p59|crown of hearts, as she deserves"></div>
+          <div class="note glass">
+            <p>your smile is my favourite thing in this whole world. one smile from you and my entire bad day just… deletes itself. so keep smiling, okayyy? it's literally my medicine.</p>
+            <span class="sig">— shaurya ♡</span>
+          </div>
+        </div>
+        <div class="panel" role="tabpanel" id="p-eyes" aria-labelledby="t-eyes" hidden>
+          <div class="stack" data-photos="p121|those eyes;p97|the way you look at the camera;p64|sparkles, but she's the sparkle"></div>
+          <div class="note glass">
+            <p>when you look at me i forget what i was even saying. every. single. time. and that tiny little beauty spot between your eyebrows? i'm weirdly obsessed with it. don't ask.</p>
+            <span class="sig">— shaurya ♡</span>
+          </div>
+        </div>
+        <div class="panel" role="tabpanel" id="p-silly" aria-labelledby="t-silly" hidden>
+          <div class="stack" data-photos="p55|tongue out, flower on, 10/10;p60|kissed by a filter (i'm jealous);p133|pout level: illegal"></div>
+          <div class="note glass">
+            <p>tongue out, pouty lips, kiss filters, all of it. the whole world gets pretty arushi, but i get this one, the goofy one. my mastikhor. and she's my favourite one.</p>
+            <span class="sig">— shaurya ♡</span>
+          </div>
+        </div>
+        <div class="panel" role="tabpanel" id="p-desi" aria-labelledby="t-desi" hidden>
+          <div class="stack" data-photos="p85|ufff;p82|pearls and that smile;p113|bindi + hearts = my weakness"></div>
+          <div class="note glass">
+            <p>you in a suit or a saree = me forgetting how breathing works. a little warning next time would be nice, ma'am 😮‍💨</p>
+            <span class="sig">— shaurya ♡</span>
+          </div>
+        </div>
+        <div class="panel" role="tabpanel" id="p-lil" aria-labelledby="t-lil" hidden>
+          <div class="stack" data-photos="p72|lil arushi 😭"></div>
+          <div class="note glass">
+            <p>lil arushi in her orange lehenga 😭 she had no idea she'd grow up to be someone's whole entire world. (spoiler: mine.) happy birthday to her too.</p>
+            <span class="sig">— shaurya ♡</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- birthday games -->
+  <section class="sec play-sec" id="play">
+    <div class="wrap">
+      <h2 class="sec-title rv">let's play, <span class="s">birthday girl</span></h2>
+      <p class="sec-sub rv">three tiny games. every single one of them ends with me loving you. i don't make the rules. (i do.)</p>
+      <div class="gpick rv" role="tablist" aria-label="birthday games">
+        <button role="tab" id="g-balloons" aria-controls="gp-balloons" aria-selected="true"><span>🎈</span>pop the balloons</button>
+        <button role="tab" id="g-scratch" aria-controls="gp-scratch" aria-selected="false" tabindex="-1"><span>🎁</span>scratch your gift</button>
+        <button role="tab" id="g-pairs" aria-controls="gp-pairs" aria-selected="false" tabindex="-1"><span>🃏</span>find the pairs</button>
+      </div>
+      <div class="gstage glass rv">
+        <div class="gpanel" role="tabpanel" id="gp-balloons" aria-labelledby="g-balloons">
+          <p class="g-top"><b id="bCount">0 / 9 popped</b> · nine balloons for the 9th of november. each one is hiding something.</p>
+          <div class="balloons" id="balloons"></div>
+          <div class="g-end" id="bEnd" hidden>
+            <p>that's 9 reasons. i have about 9 million more 🤭</p>
+            <button class="g-again" id="bAgain">blow them up again ↺</button>
+          </div>
+        </div>
+        <div class="gpanel" role="tabpanel" id="gp-scratch" aria-labelledby="g-scratch" hidden>
+          <div class="scratch" id="scratch">
+            <div class="prize">
+              <img src="img/t/p59.webp" alt="arushi wearing a crown of hearts">
+              <p class="prize-k">you won 🎉</p>
+              <p class="prize-t">one boyfriend. slightly obsessed. lifetime warranty. no returns, no refunds 🫶</p>
+            </div>
+            <canvas id="scratchCvs" aria-label="scratch card. rub it to reveal your gift"></canvas>
+          </div>
+          <p class="g-top g-under" id="scratchTxt">rub the card with your finger ✨</p>
+        </div>
+        <div class="gpanel" role="tabpanel" id="gp-pairs" aria-labelledby="g-pairs" hidden>
+          <p class="g-top"><b id="pFound">0 / 6 pairs</b> · <span id="pMoves">0 moves</span> · flip two at a time</p>
+          <div class="pairs" id="pairs"></div>
+          <div class="g-end" id="pEnd" hidden>
+            <p id="pWinTxt">you found every pair 🎉</p>
+            <p class="g-soft">i found mine the day i found you 💞</p>
+            <button class="g-again" id="pAgain">play again ↺</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- claymorphism: open when… -->
+  <section class="sec clay-sec" id="openwhen">
+    <div class="wrap">
+      <h2 class="sec-title rv">open <span class="s">when…</span></h2>
+      <p class="sec-sub rv">little letters for whenever you need me and i'm not right there.</p>
+      <div class="clay-grid" id="clayGrid"></div>
+    </div>
+  </section>
+
+  <!-- liquid glass: the love-o-meter -->
+  <section class="sec meter-sec" id="meter">
+    <div class="wrap meter-wrap">
+      <div class="meter-copy">
+        <h2 class="sec-title rv">how much do i <span class="s">love</span> you?</h2>
+        <p class="sec-sub rv">i built a very serious, very scientific machine to measure it. careful, it's a little fragile.</p>
+        <button class="btn-liquid" id="measure">measure my love 🧪</button>
+        <p class="meter-read rv" id="meterRead" aria-live="polite">machine ready. fully charged. a little nervous.</p>
+      </div>
+      <div class="flask rv" id="flask">
+        <svg viewBox="0 0 200 184" role="img" aria-label="a glass heart filling up with love">
+          <defs>
+            <clipPath id="hc"><path id="hp" d="M100 176C46 136 4 104 4 60 4 30 26 8 54 8c20 0 36 11 46 28C110 19 126 8 146 8c28 0 50 22 50 52 0 44-42 76-96 116z"/></clipPath>
+            <linearGradient id="lq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7aa2"/><stop offset="1" stop-color="#d81b56"/></linearGradient>
+            <radialGradient id="gl" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset=".5" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></radialGradient>
+          </defs>
+          <g clip-path="url(#hc)">
+            <rect width="200" height="184" fill="url(#gl)"/>
+            <g id="liquid" transform="translate(0 184)">
+              <path class="wv wv2" fill="#ffb3c9" d="M-200 8Q-187.5 0-175 8T-150 8T-125 8T-100 8T-75 8T-50 8T-25 8T0 8T25 8T50 8T75 8T100 8T125 8T150 8T175 8T200 8T225 8T250 8T275 8T300 8T325 8T350 8T375 8T400 8V300H-200Z"/>
+              <path class="wv wv1" fill="url(#lq)" d="M-200 12Q-187.5 4-175 12T-150 12T-125 12T-100 12T-75 12T-50 12T-25 12T0 12T25 12T50 12T75 12T100 12T125 12T150 12T175 12T200 12T225 12T250 12T275 12T300 12T325 12T350 12T375 12T400 12V300H-200Z"/>
+            </g>
+            <g class="bubbles" fill="#fff">
+              <circle cx="60" cy="170" r="3"/><circle cx="92" cy="176" r="2"/><circle cx="120" cy="172" r="4"/><circle cx="142" cy="168" r="2.5"/><circle cx="76" cy="178" r="2"/>
+            </g>
+          </g>
+          <use href="#hp" fill="none" stroke="#fff" stroke-opacity=".95" stroke-width="3.5"/>
+          <path d="M34 44c-9 10-12 24-8 40" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="7" stroke-linecap="round"/>
+          <g class="cracks" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M60 28l9 15-8 10 12 13"/>
+            <path d="M162 50l-16 12 8 13-15 9"/>
+            <path d="M46 110l17 4 4 15 16 3"/>
+            <path d="M100 37l-6 12 8 7"/>
+            <path d="M128 120l-10 9 6 12-9 10"/>
+            <path d="M150 92l14 6"/>
+          </g>
+        </svg>
+        <span class="pct" id="pct">0%</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- skeuomorphism: love coupons -->
+  <section class="sec coupon-sec" id="coupons">
+    <div class="wrap">
+      <h2 class="sec-title rv">birthday coupons for <span class="s">Arushi</span></h2>
+      <p class="sec-sub rv">valid forever. no expiry. tap one to redeem it, then screenshot it and send it to me. it's legally binding 📸</p>
+      <div class="coupons" id="couponList"></div>
+    </div>
+  </section>
+
+  <!-- night sky: wish lanterns -->
+  <section class="sec wish-sec" id="wish">
+    <div class="stars" id="stars" aria-hidden="true"></div>
+    <div class="sky" id="sky" aria-hidden="true"></div>
+    <div class="wrap wish-wrap">
+      <h2 class="sec-title rv">make a <span class="s">wish</span></h2>
+      <p class="sec-sub rv">write it on a lantern and let it go. it floats up to the sky, and quietly to me too, so i can spend my whole life making it come true.</p>
+      <form class="wish-form rv" id="wishForm" autocomplete="off">
+        <label class="sr" for="wishIn">your birthday wish</label>
+        <input id="wishIn" maxlength="64" placeholder="i wish…" enterkeyhint="send">
+        <button type="submit">let it fly 🏮</button>
+      </form>
+      <div class="wish-chips rv" id="wishChips">
+        <button type="button">us, forever ♾️</button>
+        <button type="button">a hug right now 🫂</button>
+        <button type="button">more momo dates 🥟</button>
+        <button type="button">to always laugh like this</button>
+      </div>
+      <p class="wish-msg" id="wishMsg" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- finale -->
+  <section class="finale" id="forever">
+    <div class="marquee m1" aria-hidden="true"><div class="track"></div></div>
+    <div class="marquee m2" aria-hidden="true"><div class="track"></div></div>
+    <div class="wrap finale-grid">
+      <figure class="final-photo rv">
+        <img src="img/m/p124.webp" alt="arushi looking out at the hills" loading="lazy" data-cap="you, me, and every birthday left">
+        <figcaption>you, me, and every birthday left</figcaption>
+      </figure>
+      <div class="final-letter">
+        <h2 class="rv">i love you like i love you</h2>
+        <p class="rv">arushi, you're my everything. you're my world. i don't know a better way to say it, so i'll just keep saying it, today, tomorrow and on every birthday after this one: i love you so much. till the very end, and probably a little after that too.</p>
+        <p class="sign rv">— yours, always, shaurya</p>
+        <button class="kiss-btn" id="kissBtn">send shaurya a birthday kiss 💋</button>
+        <p class="kiss-status" id="kissStatus" aria-live="polite"></p>
+        <div class="mood rv">
+          <p class="mood-q">before you go… how's your heart right now?</p>
+          <div class="mood-row" id="moodRow">
+            <button data-m="crying happy tears">🥹<span>crying</span></button>
+            <button data-m="feeling so so loved">🥰<span>so loved</span></button>
+            <button data-m="blushing like crazy">🤭<span>blushing</span></button>
+            <button data-m="you're so cheesy omg">🙄<span>cheesy!!</span></button>
+            <button data-m="i love you more">😘<span>love you more</span></button>
+          </div>
+          <p class="mood-say" id="moodSay" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+    <footer class="foot">
+      <p>made with way too much love, for my birthday girl · 9th november ♡</p>
+      <div class="foot-name" aria-hidden="true">Arushi</div>
+    </footer>
+  </section>
+</main>
+
+<!-- dynamic dock -->
+<nav class="dock glass" id="dock" aria-label="sections">
+  <span class="dock-ind" aria-hidden="true"></span>
+  <a href="#home" data-sec="home" aria-label="top">🎂<em>birthday girl</em></a>
+  <a href="#letter" data-sec="letter" aria-label="your letter">💌<em>your letter</em></a>
+  <a href="#us" class="desk-only" data-sec="us" aria-label="us">⏳<em>us</em></a>
+  <a href="#obsessed" data-sec="obsessed" aria-label="obsessed">💖<em>obsessed</em></a>
+  <a href="#play" data-sec="play" aria-label="games">🎈<em>games</em></a>
+  <a href="#openwhen" class="desk-only" data-sec="openwhen" aria-label="open when">✉️<em>open when</em></a>
+  <a href="#meter" data-sec="meter" aria-label="love-o-meter">🧪<em>love-o-meter</em></a>
+  <a href="#coupons" class="desk-only" data-sec="coupons" aria-label="coupons">🎟️<em>coupons</em></a>
+  <a href="#wish" data-sec="wish" aria-label="make a wish">🏮<em>make a wish</em></a>
+  <a href="#forever" data-sec="forever" aria-label="forever">💋<em>forever</em></a>
+  <button class="music" id="musicBtn" aria-label="play our song" aria-pressed="false"><span class="note">🎵</span><span class="eq"><i></i><i></i><i></i></span><em>alfaaz</em></button>
+</nav>
+
+<!-- photo viewer, styled like her retro cam -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="photo" hidden>
+  <button class="lb-btn lb-close" id="lbClose" aria-label="close">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="previous photo">‹</button>
+  <figure class="lb-frame">
+    <div class="lb-shot">
+      <img id="lbImg" alt="">
+      <span class="vcr vcr-play">PLAY ▶</span>
+      <span class="vcr vcr-rec">● REC</span>
+      <span class="vcr vcr-time" id="lbTime"></span>
+    </div>
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="next photo">›</button>
+</div>
+
+<!-- open-when letter -->
+<div class="modal" id="letterModal" role="dialog" aria-modal="true" aria-labelledby="letterTitle" hidden>
+  <div class="paper">
+    <button class="paper-close" id="letterClose" aria-label="close letter">✕</button>
+    <p class="paper-title" id="letterTitle"></p>
+    <p class="paper-body" id="letterBody"></p>
+    <p class="paper-sign">— yours, shaurya ♡</p>
+  </div>
+</div>
+
+<div class="toast glass" id="toast" role="status" aria-live="polite"></div>
+<audio id="song" src="alfaaz.mp3#t=61" preload="none"></audio>
+
+<script src="vendor/confetti.js"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>
