@@ -334,12 +334,12 @@
     await sleep(1400);
     stage = 'done';
     intro.classList.add('done');
-    setTimeout(enterSite, reduced ? 3000 : 6500);
+    setTimeout(startStory, reduced ? 2500 : 3400);
   }
   cord.addEventListener('click', lightsOn);
   intro.addEventListener('click', () => {
     if (stage === 'dark') lightsOn();
-    else if (stage === 'done') enterSite();
+    else if (stage === 'done') startStory();
   });
 
   // blow into the mic for real: loud breathy noise leans the flames, a strong gust puts them out
@@ -389,6 +389,16 @@
     if (micCtx) micCtx.close().catch(() => {});
     micStream = micCtx = null;
     intro.style.setProperty('--lean', '0deg');
+  }
+
+  // after the candles: the little flower-and-hug story, then the light carries her into the site
+  let storyOn = false;
+  function startStory() {
+    if (storyOn || entered) return;
+    storyOn = true;
+    log('story');
+    if (window.STORY && !reduced) window.STORY.play(enterSite);
+    else enterSite();
   }
 
   function enterSite() {

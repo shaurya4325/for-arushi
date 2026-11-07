@@ -1838,3 +1838,78 @@ button, a, .pola, .balloon, .pcard, .candle { touch-action: manipulation; }
   .swipe { height: 280px; }
   .reel-title { margin-top: 44px; }
 }
+
+
+/* ================= the little story after the candles ================= */
+.story {
+  position: fixed;
+  inset: 0;
+  z-index: 105;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px 16px max(20px, env(safe-area-inset-bottom));
+  overflow: hidden;
+  background:
+    radial-gradient(80% 50% at 50% 38%, rgba(255, 236, 214, .9), rgba(255, 236, 214, 0) 70%),
+    linear-gradient(180deg, #fde8ef 0%, #fbeee6 45%, #eef5ea 100%);
+  opacity: 0;
+  transition: opacity .9s ease;
+}
+.story.in { opacity: 1; }
+.story.out { opacity: 0; transition-duration: 1.4s; pointer-events: none; }
+.story-stage { width: min(100%, 640px, calc(68svh * 292 / 226)); aspect-ratio: 292 / 226; }
+.story-svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.st-sun { animation: stBreathe 5s ease-in-out infinite; transform-origin: 180px 190px; }
+@keyframes stBreathe { 50% { transform: scale(1.06); opacity: .85; } }
+.st-plant { animation: stSway var(--t) ease-in-out var(--d) infinite; }
+@keyframes stSway { 0%, 100% { transform: rotate(-2.5deg); } 50% { transform: rotate(2.5deg); } }
+.st-pop { font-family: var(--ui); font-size: 15px; font-weight: 700; text-anchor: middle; opacity: 0; animation: stPop 2.4s ease-out var(--d) forwards; }
+.st-pop.heart { fill: #ff4f87; font-size: 17px; }
+.st-pop.spark { fill: #ffc94d; font-size: 14px; }
+.st-pop.bang { fill: #d8285e; font-size: 18px; }
+@keyframes stPop { 0% { opacity: 0; transform: translate(0, 6px) scale(.4); } 18% { opacity: 1; transform: translate(0, -6px) scale(1.15); } 100% { opacity: 0; transform: translate(var(--dx), -56px) scale(1); } }
+.story-cap {
+  min-height: 2.6em;
+  max-width: 24ch;
+  margin: 0;
+  font-family: var(--hand);
+  font-size: clamp(27px, 7.4vw, 36px);
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.story-cap.in { animation: up .7s var(--ease) both; }
+.story-skip {
+  position: absolute;
+  right: 14px;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  min-height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink2);
+  background: rgba(255, 255, 255, .6);
+}
+/* the soothing light that carries her into the site */
+.story-glow {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    repeating-conic-gradient(from 0deg at 50% 46%, rgba(255, 246, 220, .55) 0deg 6deg, rgba(255, 246, 220, 0) 6deg 18deg),
+    radial-gradient(circle at 50% 46%, #fffdf7 0%, rgba(255, 248, 232, .9) 30%, rgba(255, 238, 244, 0) 70%);
+  transition: opacity 1.6s ease;
+  animation: stRays 18s linear infinite;
+}
+.story.glow .story-glow { opacity: 1; }
+.story.lit::after { content: ''; position: absolute; inset: 0; background: #fff8f4; animation: stLit .7s ease forwards; }
+@keyframes stLit { from { opacity: 0; } to { opacity: 1; } }
+@keyframes stRays { to { transform: rotate(360deg); } }
