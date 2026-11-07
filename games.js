@@ -63,6 +63,10 @@
     L.addPhoto(src, cap);
     reel.appendChild(f);
   });
+  let reelSeen = false;
+  reel.addEventListener('scroll', () => {
+    if (!reelSeen && reel.scrollLeft + reel.clientWidth >= reel.scrollWidth - 30) { reelSeen = true; log('reel_end'); }
+  }, { passive: true });
 
   // ---------------- the kiss booth ----------------
   const kst = $('#kstage'), kHer = $('#kHer'), kHim = $('#kHim'), kAsk = $('#kAsk'), kYes = $('#kYes'), kNo = $('#kNo'), kAfter = $('#kAfter');
@@ -215,7 +219,9 @@
   kst.addEventListener('click', e => {
     if (busy || !kissN) return;
     const r = kst.getBoundingClientRect();
-    if ((e.clientX - r.left) / r.width < .45) {
+    const onHim = (e.clientX - r.left) / r.width < .45;
+    log('poke', '', onHim ? 'him' : 'her', 12);
+    if (onHim) {
       say(himSay, pick(['hey! 😳', 'that tickles', "ma'am pls 😮‍💨", 'one more kiss? 🥺']), 1400);
       kHim.animate([{ transform: 'none' }, { transform: 'rotate(-2deg)' }, { transform: 'rotate(1.5deg)' }, { transform: 'none' }], { duration: 450 });
     } else {
@@ -474,6 +480,7 @@
     $('#swEnd').hidden = true;
     if (ti >= TT.length) {
       $('#swEnd').hidden = false;
+      log('thisorthat_done');
       $('#swCount').textContent = `${TT.length} / ${TT.length}`;
       heartsConf({ particleCount: 60, spread: 90, origin: at(sw) });
       return;

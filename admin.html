@@ -13,11 +13,12 @@
 <style>
   :root {
     --ink: #4a1730; --ink2: #7a3655; --cherry: #d8285e; --rose: #ff5d8f; --blush: #ffe1ea;
-    --paper: #fffaf3; --coffee: #4a2c1a;
+    --coffee: #3b2314; --green: #1b8a5a;
     --script: 'Great Vibes', cursive; --hand: 'Caveat', cursive; --ui: 'Fredoka', system-ui, sans-serif;
     --spring: cubic-bezier(.3, 1.55, .5, 1); --ease: cubic-bezier(.2, .8, .2, 1);
   }
   * { box-sizing: border-box; }
+  html { -webkit-tap-highlight-color: transparent; }
   body {
     margin: 0;
     min-height: 100vh;
@@ -27,82 +28,119 @@
     background-attachment: fixed;
   }
   button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; touch-action: manipulation; }
   :focus-visible { outline: 3px solid var(--rose); outline-offset: 3px; border-radius: 10px; }
-  .glass { background: rgba(255, 255, 255, .5); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, .8); box-shadow: 0 10px 34px rgba(216, 40, 94, .12), inset 0 1px 0 #fff; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 40px 16px 80px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .glass { background: rgba(255, 255, 255, .55); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, .85); box-shadow: 0 10px 34px rgba(216, 40, 94, .12), inset 0 1px 0 #fff; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 36px 16px 90px; }
   [hidden] { display: none !important; }
 
   /* sign in */
   .login { display: grid; place-items: center; min-height: 100vh; padding: 24px 16px; }
-  .login-card { width: min(420px, 100%); padding: 34px 28px 28px; border-radius: 32px; text-align: center; }
+  .login-card { width: min(420px, 100%); padding: 34px 26px 28px; border-radius: 32px; text-align: center; }
   .lock { font-size: 54px; line-height: 1; animation: bob 3s ease-in-out infinite; }
   @keyframes bob { 50% { transform: translateY(-6px) rotate(-4deg); } }
-  .login h1 { margin: 10px 0 2px; font-family: var(--script); font-weight: 400; font-size: 52px; line-height: 1; color: var(--cherry); }
+  .login h1 { margin: 10px 0 2px; font-family: var(--script); font-weight: 400; font-size: 54px; line-height: 1; color: var(--cherry); }
   .login p { margin: 0 0 22px; font-family: var(--hand); font-size: 23px; color: var(--ink2); }
-  .field { display: block; width: 100%; margin-bottom: 12px; padding: 14px 18px; border: 0; border-radius: 18px; background: var(--blush); box-shadow: inset 5px 5px 10px #ecb9c9, inset -5px -5px 10px #fff8fb; font-size: 16px; }
-  .btn { padding: 14px 26px; border: 0; border-radius: 999px; font-size: 17px; font-weight: 600; color: #fff; background: linear-gradient(135deg, #ff4f87, #ff8f6b); box-shadow: 0 12px 26px rgba(216, 40, 94, .35), inset 0 2px 5px rgba(255, 255, 255, .45); cursor: pointer; transition: transform .25s var(--spring); }
-  .btn:hover { transform: scale(1.04); }
-  .btn.small { padding: 9px 16px; font-size: 14px; }
+  .field { display: block; width: 100%; margin-bottom: 12px; padding: 14px 18px; border: 0; border-radius: 18px; font-size: 16px; background: var(--blush); box-shadow: inset 5px 5px 10px #ecb9c9, inset -5px -5px 10px #fff8fb; }
+  .btn { min-height: 48px; padding: 0 24px; border: 0; border-radius: 999px; font-size: 17px; font-weight: 600; color: #fff; background: linear-gradient(135deg, #ff4f87, #ff8f6b); box-shadow: 0 12px 26px rgba(216, 40, 94, .32), inset 0 2px 5px rgba(255, 255, 255, .45); transition: transform .25s var(--spring); }
+  .btn:active { transform: scale(.96); }
+  .btn.small { min-height: 40px; padding: 0 15px; font-size: 14px; }
   .btn.ghost { color: var(--cherry); background: #fff0f4; box-shadow: 0 6px 14px rgba(216, 40, 94, .14); }
+  .btn.on { color: #fff; background: var(--green); }
   .err { min-height: 1.4em; margin: 12px 0 0 !important; font-size: 15px !important; font-family: var(--ui) !important; color: var(--cherry) !important; }
 
-  /* diary */
-  .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
-  .top h1 { margin: 0; font-family: var(--script); font-weight: 400; font-size: clamp(54px, 8vw, 84px); line-height: .95; color: var(--cherry); }
-  .top p { margin: 6px 0 0; max-width: 36ch; font-family: var(--hand); font-size: 24px; line-height: 1.15; color: var(--ink2); }
-  .live { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #1b8a5a; background: #e3f8ee; }
-  .live i { width: 8px; height: 8px; border-radius: 50%; background: #22b573; animation: pulse 1.6s ease-in-out infinite; }
-  @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(34, 181, 115, 0); } 0% { box-shadow: 0 0 0 0 rgba(34, 181, 115, .5); } }
-  .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
-  .tools label { display: inline-flex; align-items: center; gap: 6px; margin-right: auto; font-size: 14px; color: var(--ink2); cursor: pointer; }
-  .tools input { accent-color: var(--cherry); width: 16px; height: 16px; }
+  /* top */
+  .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; }
+  .top h1 { margin: 0; font-family: var(--script); font-weight: 400; font-size: clamp(56px, 9vw, 88px); line-height: .95; color: var(--cherry); }
+  .top p { margin: 4px 0 0; max-width: 36ch; font-family: var(--hand); font-size: 24px; line-height: 1.15; color: var(--ink2); }
+  .live { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--green); background: #e3f8ee; }
+  .live i, .here i { width: 9px; height: 9px; border-radius: 50%; background: #22b573; animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 181, 115, .55); } 70% { box-shadow: 0 0 0 9px rgba(34, 181, 115, 0); } }
+  .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; }
+  .tools label { display: inline-flex; align-items: center; gap: 6px; margin-right: auto; font-size: 14px; color: var(--ink2); }
+  .tools input { width: 18px; height: 18px; accent-color: var(--cherry); }
   .pw { display: flex; gap: 8px; margin-top: 10px; }
   .pw .field { margin: 0; padding: 10px 14px; }
 
-  .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin: 28px 0 8px; }
-  .stat { padding: 16px; border-radius: 24px; background: var(--blush); box-shadow: 8px 8px 18px #ecb9c9, -8px -8px 18px #fff8fb; }
-  .stat b { display: block; font-size: 34px; font-weight: 600; line-height: 1; color: var(--cherry); }
-  .stat span { display: block; margin-top: 6px; font-size: 13.5px; color: var(--ink2); }
+  /* she's here right now */
+  .here { display: flex; align-items: center; gap: 12px; margin-top: 22px; padding: 14px 18px; border-radius: 22px; color: #0f5c3c; background: linear-gradient(135deg, #e3f8ee, #f1fff8); box-shadow: 0 10px 26px rgba(34, 181, 115, .18); animation: drop .6s var(--spring) both; }
+  .here i { flex: none; }
+  .here b { font-weight: 600; }
+  .here span { display: block; font-size: 14px; opacity: .85; }
+  .away { margin-top: 22px; padding: 12px 16px; border-radius: 18px; font-size: 14.5px; color: var(--ink2); background: rgba(255, 255, 255, .5); }
 
-  h2 { margin: 44px 0 14px; font-size: 28px; font-weight: 600; }
+  /* love report */
+  .report { position: relative; margin-top: 22px; padding: 26px 24px 22px; border-radius: 6px; color: var(--coffee); background: #f2e0bd radial-gradient(ellipse at 15% 10%, rgba(255, 250, 235, .75), transparent 55%); box-shadow: inset 0 0 50px rgba(120, 72, 35, .3), 0 16px 34px rgba(90, 40, 20, .18); rotate: -.5deg; }
+  .report::before { content: ''; position: absolute; left: 50%; top: -16px; width: 44px; height: 44px; margin-left: -22px; border-radius: 46% 54% 52% 48%; background: radial-gradient(circle at 36% 30%, #c84a4a, #8e1b22 55%, #5e0d14); box-shadow: 0 4px 8px rgba(60, 10, 10, .35); }
+  .report h3 { margin: 4px 0 8px; font-family: var(--script); font-weight: 400; font-size: 38px; line-height: 1; color: #6e1a14; }
+  .report p { margin: 0; font-family: var(--hand); font-size: 25px; line-height: 1.25; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; margin: 26px 0 6px; }
+  .stat { padding: 16px 16px 14px; border-radius: 24px; background: var(--blush); box-shadow: 8px 8px 18px #ecb9c9, -8px -8px 18px #fff8fb; }
+  .stat b { display: block; font-size: 34px; font-weight: 600; line-height: 1; color: var(--cherry); }
+  .stat span { display: block; margin-top: 6px; font-size: 13.5px; line-height: 1.3; color: var(--ink2); }
+
+  h2 { margin: 46px 0 14px; font-size: 27px; font-weight: 600; }
   h2 .s { font-family: var(--script); font-weight: 400; font-size: 1.35em; color: var(--cherry); }
+  h2 small { display: block; margin-top: 2px; font-family: var(--hand); font-size: 21px; font-weight: 500; color: var(--ink2); }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; }
+  .card { padding: 18px 18px 14px; border-radius: 26px; }
+  .card h3 { margin: 0 0 10px; font-size: 18px; font-weight: 600; }
+  .empty { padding: 22px; border-radius: 24px; text-align: center; font-family: var(--hand); font-size: 23px; color: var(--ink2); }
+
+  /* her words */
   .words { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-  .word {
-    position: relative;
-    padding: 22px 20px 16px;
-    border-radius: 6px;
-    color: var(--coffee);
-    background: #f2e0bd radial-gradient(ellipse at 15% 10%, rgba(255, 250, 235, .75), transparent 55%);
-    box-shadow: inset 0 0 40px rgba(120, 72, 35, .28), 0 14px 28px rgba(90, 40, 20, .18);
-    rotate: var(--r, -1deg);
-    animation: drop .6s var(--spring) both;
-  }
+  .word { position: relative; padding: 22px 20px 16px; border-radius: 6px; color: var(--coffee); background: #f2e0bd radial-gradient(ellipse at 15% 10%, rgba(255, 250, 235, .75), transparent 55%); box-shadow: inset 0 0 40px rgba(120, 72, 35, .28), 0 14px 28px rgba(90, 40, 20, .18); rotate: var(--r, -1deg); animation: drop .6s var(--spring) both; }
   .word .k { font-size: 12.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #8a2b1f; }
   .word p { margin: 6px 0 10px; font-family: var(--hand); font-size: 27px; line-height: 1.12; white-space: pre-wrap; overflow-wrap: anywhere; }
   .word time { font-size: 13px; color: #6b4a33; }
-  .empty { padding: 26px; border-radius: 24px; text-align: center; font-family: var(--hand); font-size: 24px; color: var(--ink2); }
 
-  .visit { margin-bottom: 18px; padding: 18px 18px 8px; border-radius: 28px; animation: drop .6s var(--spring) both; }
-  .visit-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 6px; }
+  /* picks, scores, to-do */
+  .picks { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pick { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; font-size: 15px; background: #fff; box-shadow: 0 4px 12px rgba(120, 20, 60, .1), inset 0 0 0 2px rgba(255, 143, 171, .25); }
+  .pick s { font-size: 13px; color: #b28aa0; }
+  .rows { margin: 0; padding: 0; list-style: none; }
+  .rows li { display: flex; justify-content: space-between; gap: 10px; padding: 9px 2px; border-top: 1px dashed rgba(216, 40, 94, .18); font-size: 15.5px; }
+  .rows li:first-child { border-top: 0; }
+  .rows b { color: var(--cherry); font-weight: 600; white-space: nowrap; }
+  .todo { margin: 0; padding: 0; list-style: none; }
+  .todo li { display: flex; align-items: flex-start; gap: 10px; padding: 9px 2px; border-top: 1px dashed rgba(216, 40, 94, .18); }
+  .todo li:first-child { border-top: 0; }
+  .todo input { flex: none; width: 22px; height: 22px; margin-top: 1px; accent-color: var(--cherry); }
+  .todo label { font-size: 15.5px; line-height: 1.35; }
+  .todo .done label { color: #b28aa0; text-decoration: line-through; }
+  .todo small { display: block; font-size: 12.5px; color: var(--ink2); }
+
+  /* timeline */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .filters button { min-height: 40px; padding: 0 14px; border: 0; border-radius: 999px; font-size: 14.5px; font-weight: 500; color: var(--ink2); background: rgba(255, 255, 255, .7); box-shadow: 0 4px 10px rgba(120, 20, 60, .08); }
+  .filters button[aria-pressed="true"] { color: #fff; background: var(--cherry); }
+  .visit { margin-bottom: 16px; padding: 16px 16px 6px; border-radius: 26px; animation: drop .6s var(--spring) both; }
+  .visit-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 4px; }
   .visit-h b { font-size: 18px; font-weight: 600; }
   .visit-h span { font-size: 14px; color: var(--ink2); }
+  .me-btn { min-height: 32px; margin-left: auto; padding: 0 12px; border: 1px solid rgba(216, 40, 94, .25); border-radius: 999px; font-size: 13px; color: var(--ink2); background: #fff; }
   .tag { padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #fff; background: #b79cff; }
-  ol { margin: 0; padding: 0; list-style: none; }
-  li { display: grid; grid-template-columns: 74px 30px 1fr; gap: 8px; align-items: start; padding: 9px 4px; border-top: 1px dashed rgba(216, 40, 94, .18); }
-  li time { padding-top: 3px; font-size: 13px; color: var(--ink2); font-variant-numeric: tabular-nums; }
-  li .e { font-size: 21px; line-height: 1.2; text-align: center; }
-  li .t { font-size: 16px; line-height: 1.4; }
-  li .q { display: block; margin-top: 2px; font-family: var(--hand); font-size: 22px; line-height: 1.15; color: var(--cherry); white-space: pre-wrap; overflow-wrap: anywhere; }
-  li.new { animation: glow 2.4s ease; }
+  .tl { margin: 0; padding: 0; list-style: none; }
+  .tl li { display: grid; grid-template-columns: 70px 28px 1fr; gap: 8px; align-items: start; padding: 9px 2px; border-top: 1px dashed rgba(216, 40, 94, .18); }
+  .tl time { padding-top: 3px; font-size: 13px; color: var(--ink2); font-variant-numeric: tabular-nums; }
+  .tl .e { font-size: 21px; line-height: 1.2; text-align: center; }
+  .tl .t { font-size: 15.5px; line-height: 1.4; }
+  .tl .q { display: block; margin-top: 2px; font-family: var(--hand); font-size: 22px; line-height: 1.15; color: var(--cherry); white-space: pre-wrap; overflow-wrap: anywhere; }
+  .tl li.new { animation: glow 2.6s ease; }
   @keyframes glow { 0%, 40% { background: rgba(255, 143, 171, .3); } }
-  @keyframes drop { from { opacity: 0; transform: translateY(18px) scale(.97); } }
+  @keyframes drop { from { opacity: 0; transform: translateY(16px) scale(.97); } }
+  .more { display: block; margin: 6px auto 0; }
 
-  .toast { position: fixed; left: 50%; top: 16px; z-index: 50; width: max-content; max-width: calc(100vw - 32px); padding: 12px 20px; border-radius: 24px; font-weight: 500; text-align: center; translate: -50% -160%; transition: translate .5s var(--spring); }
+  .toast { position: fixed; left: 50%; top: 14px; z-index: 50; width: max-content; max-width: calc(100vw - 28px); padding: 12px 20px; border-radius: 24px; font-weight: 500; text-align: center; translate: -50% -170%; transition: translate .5s var(--spring); }
   .toast.show { translate: -50% 0; }
-  .foot { margin-top: 40px; text-align: center; font-family: var(--hand); font-size: 22px; color: var(--ink2); }
+  .foot { margin-top: 44px; text-align: center; font-family: var(--hand); font-size: 22px; color: var(--ink2); }
   @media (max-width: 560px) {
-    li { grid-template-columns: 62px 26px 1fr; }
+    .tl li { grid-template-columns: 60px 24px 1fr; }
     .tools label { flex-basis: 100%; }
+    .report { padding: 24px 18px 18px; }
+    .report p { font-size: 23px; }
   }
 </style>
 </head>
@@ -113,9 +151,10 @@
     <div class="lock">🔐</div>
     <h1>her little diary</h1>
     <p>only for shaurya. everything she does, written down with love.</p>
-    <label class="sr" for="email" hidden>email</label>
+    <label class="sr" for="email">email</label>
     <input class="field" id="email" type="email" autocomplete="username" value="shaurya4325@gmail.com" required>
-    <input class="field" id="pass" type="password" autocomplete="current-password" placeholder="password" required>
+    <label class="sr" for="pass">password</label>
+    <input class="field" id="pass" type="password" inputmode="numeric" autocomplete="current-password" placeholder="password" required>
     <button class="btn" type="submit">open her diary 💌</button>
     <p class="err" id="err" aria-live="polite"></p>
   </form>
@@ -131,22 +170,53 @@
   </div>
   <div class="tools">
     <label><input type="checkbox" id="showMine"> show my own previews 👀</label>
+    <button class="btn small ghost" id="pingBtn">🔔 ping me when she does something</button>
     <button class="btn small ghost" id="pwBtn">change password</button>
     <button class="btn small ghost" id="clearBtn">clear everything</button>
     <button class="btn small ghost" id="outBtn">sign out</button>
   </div>
   <form class="pw" id="pwForm" hidden>
+    <label class="sr" for="newPw">new password</label>
     <input class="field" id="newPw" type="password" minlength="6" placeholder="new password (6+ characters)" autocomplete="new-password" required>
     <button class="btn small" type="submit">save</button>
   </form>
 
+  <div class="here" id="here" hidden><i></i><div><b id="hereT">arushi is on your site right now 💗</b><span id="hereS"></span></div></div>
+  <p class="away" id="away" hidden></p>
+
+  <article class="report" id="report">
+    <h3>today's love report</h3>
+    <p id="reportT"></p>
+  </article>
+
   <div class="stats" id="stats"></div>
 
-  <h2>her <span class="s">words</span></h2>
+  <h2>her <span class="s">words</span><small>wishes, letters and feelings she wrote for you</small></h2>
   <div class="words" id="words"></div>
 
+  <div class="grid2" style="margin-top:46px">
+    <section class="card glass">
+      <h3>💘 what she picked</h3>
+      <div class="picks" id="picks"></div>
+    </section>
+    <section class="card glass">
+      <h3>🏆 her scoreboard</h3>
+      <ul class="rows" id="scores"></ul>
+    </section>
+    <section class="card glass">
+      <h3>📝 your to-do list (because of her)</h3>
+      <ul class="todo" id="todo"></ul>
+    </section>
+    <section class="card glass">
+      <h3>💌 your letter</h3>
+      <ul class="rows" id="letter"></ul>
+    </section>
+  </div>
+
   <h2>everything, <span class="s">moment by moment</span></h2>
+  <div class="filters" id="filters" role="group" aria-label="filter the timeline"></div>
   <div id="timeline"></div>
+  <button class="btn small ghost more" id="moreBtn" hidden>show older visits</button>
   <p class="foot">she's the best thing that ever happened to you. don't forget it ♡</p>
 </main>
 
@@ -166,9 +236,10 @@
   const auth = getAuth(app), db = getFirestore(app);
   const $ = s => document.querySelector(s);
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
 
   let toastT;
-  function toast(msg, ms = 3200) {
+  function toast(msg, ms = 3400) {
     const t = $('#toast');
     t.textContent = msg;
     t.classList.add('show');
@@ -176,7 +247,7 @@
     toastT = setTimeout(() => t.classList.remove('show'), ms);
   }
 
-  // how each thing she did is said out loud
+  // ---------------- how each thing she did is said out loud ----------------
   const q = s => `“${s}”`;
   const SAY = {
     visit: e => e.detail === 'gate' ? ['🎁', 'she opened the link early and found the wrapped gift'] : ['✨', 'she opened her birthday site'],
@@ -188,15 +259,24 @@
     cake_done: () => ['🎂', 'every candle out. she made her birthday wish ✨'],
     enter: () => ['🌅', 'she stepped into her birthday site'],
     letter_open: () => ['💌', 'she broke the seal on your letter'],
+    letter_done: e => ['🥹', `she read your whole letter, all the way to “all yours” (took ${e.detail})`],
     letter_kiss: e => ['💋', e.detail === '1' ? 'she kissed your letter' : `she kissed your letter again (kiss #${e.detail})`],
     reply: () => ['✍️', 'she wrote back to you'],
+    kiss_no: e => ['🙅‍♀️', `she tried to press “no” (attempt #${e.detail}). the button ran away 😌`],
+    kiss_yes: e => ['💋', e.detail === '1' ? 'she said YES to your birthday kiss 💋' : `she asked for another kiss (kiss #${e.detail})`],
+    kiss_back: e => ['😘', e.detail === '1' ? 'she kissed you back 😳' : `she kissed you back again (#${e.detail})`],
+    poke: e => e.detail === 'him' ? ['👉', 'she poked you in the photobooth'] : ['🙈', 'she poked herself in the photobooth'],
+    reel_end: () => ['📸', 'she swiped through every photo of you two'],
     photo: e => ['📸', `she opened the photo ${q(e.text)}`],
     tab: e => ['💖', `she looked at ${q(e.text)}`],
     game: e => ['🎮', `she picked ${q(e.text)}`],
-    balloon: e => ['🎈', `she popped balloon ${e.detail} and read ${q(e.text)}`],
-    balloons_all: () => ['🎉', 'she popped all 9 balloons'],
-    scratch_done: () => ['🎁', 'she scratched her gift card: one boyfriend, lifetime warranty'],
-    pairs_win: e => ['🃏', `she found every pair in ${e.detail} moves`],
+    catch_score: e => ['🎯', `she caught ${e.detail} of your kisses in “catch my kisses”`],
+    thisorthat: e => ['💘', `this or that: ${e.text}. she picked ${q(e.detail)}`],
+    thisorthat_done: () => ['💘', 'she answered all 12 this-or-thats'],
+    dare_spin: e => ['🎡', `she spun the dare wheel and got ${q(e.text)}`],
+    dare: e => ['🎡', e.detail === 'accepted' ? `she ACCEPTED the dare ${q(e.text)}. check your phone 👀` : `she chickened out of ${q(e.text)} 🐔 (she owes you 2 kisses)`],
+    quiz: e => ['🤓', `quiz: ${q(e.text)} she answered ${q(e.detail)}`],
+    quiz_done: e => ['🏅', `she finished the shaurya quiz with ${e.detail}/7`],
     openwhen: e => ['✉️', `she opened ${q(e.text)}`],
     measure: () => ['🧪', 'she measured your love. the heart exploded 💥'],
     coupon: e => ['🎟️', e.detail === 'redeemed' ? `she redeemed ${q(e.text)}. time to pay up 😌` : `she gave back ${q(e.text)}`],
@@ -206,72 +286,188 @@
     float_balloon: e => ['🎈', `she popped a floating balloon: ${q(e.text)}`],
     mood: () => ['🥹', 'she told you how her heart feels'],
     song: e => ['🎵', e.detail === 'play' ? 'alfaaz is playing' : 'she paused alfaaz'],
-    kiss_no: e => ['🙅‍♀️', `she tried to press “no” (attempt #${e.detail}). the button ran away 😌`],
-    kiss_yes: e => ['💋', e.detail === '1' ? 'she said YES to your birthday kiss 💋' : `she asked for another kiss (kiss #${e.detail})`],
-    kiss_back: e => ['😘', e.detail === '1' ? 'she kissed you back 😳' : `she kissed you back again (#${e.detail})`],
-    catch_score: e => ['🎯', `she caught ${e.detail} of your kisses in “catch my kisses”`],
-    thisorthat: e => ['💘', `this or that: ${e.text}. she picked ${q(e.detail)}`],
-    dare_spin: e => ['🎡', `she spun the dare wheel and got ${q(e.text)}`],
-    dare: e => ['🎡', e.detail === 'accepted' ? `she ACCEPTED the dare ${q(e.text)}. check your phone 👀` : `she chickened out of ${q(e.text)} 🐔 (she owes you 2 kisses)`],
-    quiz: e => ['🤓', `quiz: ${q(e.text)} she answered ${q(e.detail)}`],
-    quiz_done: e => ['🏅', `she finished the shaurya quiz with ${e.detail}/7`],
     install: () => ['📲', 'she saved the site to her home screen'],
     opened_app: () => ['📲', 'she opened it from her home screen'],
   };
   const WORDS = { wish: 'her wish 🏮', reply: 'her letter to you ✍️', mood: 'her heart right now 🥹' };
-  const say = e => (SAY[e.type] || (() => ['♡', `${e.type} ${e.text}`]))(e);
+  const say = e => (SAY[e.type] || (() => ['♡', `${e.type} ${e.text || ''}`]))(e);
+  const CATS = {
+    all: ['all ✨', null],
+    words: ['her words ✍️', ['wish', 'reply', 'mood']],
+    kisses: ['kisses 💋', ['kiss_yes', 'kiss_back', 'kiss_no', 'kiss', 'letter_kiss', 'poke']],
+    games: ['games 🎮', ['game', 'catch_score', 'thisorthat', 'thisorthat_done', 'dare_spin', 'dare', 'quiz', 'quiz_done', 'measure', 'heart', 'float_balloon']],
+    letters: ['letters 💌', ['letter_open', 'letter_done', 'openwhen', 'coupon']],
+    photos: ['photos 📸', ['photo', 'tab', 'reel_end']],
+  };
 
   const fmtTime = new Intl.DateTimeFormat('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true });
   const fmtDay = new Intl.DateTimeFormat('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
-  const fmtFull = new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
+  const fmtFull = new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', hour12: true });
   const when = e => e.at ? e.at.toDate() : new Date(e.clientAt);
   const low = s => s.replace('AM', 'am').replace('PM', 'pm');
+  const ago = d => {
+    const s = Math.round((Date.now() - d) / 1000);
+    if (s < 60) return 'just now';
+    if (s < 3600) return `${Math.round(s / 60)} min ago`;
+    if (s < 86400) return `${Math.round(s / 3600)} h ago`;
+    return low(fmtFull.format(d));
+  };
+  const plural = (n, w, p = `${w}s`) => `${n} ${n === 1 ? w : p}`;
 
-  let all = [], first = true, seen = new Set(), unsub = null;
+  let all = [], first = true, seen = new Set(), unsub = null, cat = store.get('diary-cat', 'all'), pageN = 6;
+  const done = new Set(store.get('diary-done', []));
 
+  // ---------------- rendering ----------------
+  // visits you marked "that was me" (opened without ?preview) stay out of her stats
+  const meSessions = new Set(store.get('diary-mine', []));
+  const isMine = s => String(s).startsWith('p-') || meSessions.has(s);
+  function visible() {
+    const mine = $('#showMine').checked;
+    return all.filter(e => mine || !isMine(e.session));
+  }
   function render() {
-    const showMine = $('#showMine').checked;
-    const list = all.filter(e => showMine || !String(e.session).startsWith('p-'));
+    const list = visible();
+    const asc = [...list].sort((a, b) => when(a) - when(b));
     const count = t => list.filter(e => e.type === t).length;
+    const last = t => asc.filter(e => e.type === t).at(-1);
     const sessions = new Set(list.filter(e => e.type === 'visit').map(e => e.session));
-    const redeemed = new Set();
-    [...list].sort((a, b) => when(a) - when(b)).forEach(e => { if (e.type === 'coupon') e.detail === 'redeemed' ? redeemed.add(e.text) : redeemed.delete(e.text); });
 
-    const stats = $('#stats');
-    stats.replaceChildren(...[
+    // is she here right now?
+    const latest = asc.at(-1);
+    const fresh = latest && Date.now() - when(latest) < 3 * 60000;
+    $('#here').hidden = !fresh;
+    $('#away').hidden = !latest || fresh;
+    if (fresh) $('#hereS').textContent = `just now: ${say(latest)[1]}`;
+    else if (latest) $('#away').textContent = `last seen ${ago(when(latest))}: ${say(latest)[1]}`;
+
+    // coupons still owed, dares she accepted, kisses she owes
+    const owed = new Map();
+    asc.filter(e => e.type === 'coupon').forEach(e => (e.detail === 'redeemed' ? owed.set(e.text, e) : owed.delete(e.text)));
+    const dares = asc.filter(e => e.type === 'dare');
+    const chicken = dares.filter(e => e.detail !== 'accepted').length;
+    const booth = count('kiss_yes'), back = count('kiss_back'), sent = count('kiss'), letterK = count('letter_kiss');
+    const best = Math.max(0, ...list.filter(e => e.type === 'catch_score').map(e => +e.detail || 0));
+    const quiz = last('quiz_done');
+    const wishes = count('wish'), replies = count('reply'), mood = last('mood');
+
+    // a little paragraph, written the way you'd say it
+    const bits = [];
+    if (sessions.size) bits.push(`she came to her site ${plural(sessions.size, 'time')}`);
+    if (count('letter_done')) bits.push('read your whole letter');
+    else if (count('letter_open')) bits.push('opened your letter');
+    if (booth) bits.push(`said yes to ${plural(booth, 'kiss', 'kisses')}${count('kiss_no') ? ` (after trying to press “no” ${plural(count('kiss_no'), 'time')} 😂)` : ''}`);
+    if (back) bits.push(`kissed you back ${plural(back, 'time')}`);
+    if (sent + letterK) bits.push(`sent you ${sent + letterK} more ${sent + letterK === 1 ? 'kiss' : 'kisses'}`);
+    if (best) bits.push(`caught ${best} of your kisses in one game`);
+    if (wishes) bits.push(`made ${plural(wishes, 'wish', 'wishes')}`);
+    if (replies) bits.push(`wrote you ${plural(replies, 'letter')}`);
+    $('#reportT').textContent = bits.length
+      ? `${bits.slice(0, -1).join(', ')}${bits.length > 1 ? ' and ' : ''}${bits.at(-1)}.${mood ? ` right now her heart feels: “${mood.text}”.` : ''} she loves you. obviously. 💗`
+      : "nothing yet. the moment she opens your gift, her story starts writing itself here ♡";
+
+    $('#stats').replaceChildren(...[
       [sessions.size, 'visits ✨'],
-      [count('letter_open'), 'letters opened 💌'],
-      [count('kiss') + count('letter_kiss'), 'kisses for you 💋'],
-      [count('wish'), 'wishes sent 🏮'],
-      [redeemed.size, 'coupons to honour 🎟️'],
-      [count('kiss_yes') + count('kiss_back'), 'booth kisses 😘'],
-      [count('dare') , 'dares answered 🎡'],
+      [booth + back + sent + letterK, 'kisses, all kinds 💋'],
+      [wishes, 'wishes sent 🏮'],
+      [owed.size, 'coupons to honour 🎟️'],
+      [count('dare'), 'dares answered 🎡'],
       [count('heart') + count('float_balloon'), 'things she popped 🎈'],
     ].map(([n, label]) => { const d = el('div', 'stat'); d.append(el('b', '', n), el('span', '', label)); return d; }));
 
-    const words = $('#words');
+    // her words
     const ws = list.filter(e => WORDS[e.type]);
-    words.replaceChildren(...(ws.length ? ws.map((e, i) => {
+    $('#words').replaceChildren(...(ws.length ? ws.map((e, i) => {
       const d = el('article', 'word');
       d.style.setProperty('--r', `${[-1.2, .8, -.4, 1.1][i % 4]}deg`);
       d.append(el('span', 'k', WORDS[e.type]), el('p', '', e.text), el('time', '', low(fmtFull.format(when(e)))));
       return d;
     }) : [el('p', 'empty glass', "nothing yet. when she writes a wish or a reply, it'll show up here ♡")]));
 
+    // what she picked (latest answer per question)
+    const picks = new Map();
+    asc.filter(e => e.type === 'thisorthat').forEach(e => picks.set(e.text, e.detail));
+    $('#picks').replaceChildren(...(picks.size ? [...picks].map(([pair, chosen]) => {
+      const other = pair.split(' vs ').find(x => x !== chosen) || '';
+      const p = el('span', 'pick');
+      p.append(el('b', '', chosen), el('s', '', other));
+      return p;
+    }) : [el('span', 'empty', 'she hasn\'t played “this or that” yet')]));
+
+    // scoreboard
+    const rows = [
+      ['best “catch my kisses” score', best ? `${best} 💋` : '—'],
+      ['shaurya quiz', quiz ? `${quiz.detail}/7 🏅` : '—'],
+      ['tried to say “no” to a kiss', plural(count('kiss_no'), 'time')],
+      ['love-o-meter explosions', `${count('measure')} 💥`],
+      ['this-or-thats answered', `${picks.size}/12`],
+      ['photos she opened', `${count('photo')} 📸`],
+    ];
+    $('#scores').replaceChildren(...rows.map(([k, v]) => { const li = el('li'); li.append(el('span', '', k), el('b', '', v)); return li; }));
+
+    // to-do: what you owe her, and what she owes you
+    const todo = [];
+    owed.forEach(e => todo.push({ id: e.id, t: `honour her coupon: ${e.text}`, s: `redeemed ${ago(when(e))}` }));
+    dares.filter(e => e.detail === 'accepted').forEach(e => todo.push({ id: e.id, t: e.text.includes('chocolate') ? 'buy her the chocolate she won 🍫' : `she's doing a dare for you: ${e.text.replace(/\.+$/, '')}. reply sweetly 👀`, s: ago(when(e)) }));
+    if (chicken) todo.push({ id: `owed-${chicken}`, t: `collect ${chicken * 2} kisses she owes you (chickened out of ${plural(chicken, 'dare')}) 🐔`, s: 'birthday rules' });
+    asc.filter(e => e.type === 'reply').forEach(e => todo.push({ id: e.id, t: 'write back to her letter 💌', s: ago(when(e)) }));
+    $('#todo').replaceChildren(...(todo.length ? todo.map(item => {
+      const li = el('li');
+      const box = el('input'); box.type = 'checkbox'; box.id = `td-${item.id}`; box.checked = done.has(item.id);
+      const lab = el('label', '', item.t); lab.htmlFor = box.id; lab.append(el('small', '', item.s));
+      if (box.checked) li.classList.add('done');
+      box.addEventListener('change', () => {
+        box.checked ? done.add(item.id) : done.delete(item.id);
+        store.set('diary-done', [...done]);
+        li.classList.toggle('done', box.checked);
+        if (box.checked) toast('good boy. she\'s lucky. (so are you) 💗');
+      });
+      li.append(box, lab);
+      return li;
+    }) : [el('li', '', 'nothing yet. enjoy it while it lasts 😌')]));
+
+    // the letter
+    const lo = asc.find(e => e.type === 'letter_open'), ld = asc.find(e => e.type === 'letter_done');
+    const lrows = [
+      ['opened', lo ? low(fmtFull.format(when(lo))) : 'not yet'],
+      ['read to the end', ld ? `yes 🥹 (${ld.detail})` : lo ? 'still reading…' : '—'],
+      ['kisses on the letter', `${letterK} 💋`],
+      ['letters she wrote back', `${replies} ✍️`],
+    ];
+    $('#letter').replaceChildren(...lrows.map(([k, v]) => { const li = el('li'); li.append(el('span', '', k), el('b', '', v)); return li; }));
+
+    // filters + timeline, grouped by visit
+    $('#filters').replaceChildren(...Object.entries(CATS).map(([k, [label]]) => {
+      const b = el('button', '', label);
+      b.setAttribute('aria-pressed', k === cat);
+      b.addEventListener('click', () => { cat = k; store.set('diary-cat', k); render(); });
+      return b;
+    }));
+    const types = CATS[cat][1];
+    const shown = types ? list.filter(e => types.includes(e.type)) : list;
     const bySession = new Map();
-    for (const e of list) {
-      if (!bySession.has(e.session)) bySession.set(e.session, []);
-      bySession.get(e.session).push(e);
-    }
+    for (const e of shown) { if (!bySession.has(e.session)) bySession.set(e.session, []); bySession.get(e.session).push(e); }
     const groups = [...bySession.values()].map(g => g.sort((a, b) => when(a) - when(b))).sort((a, b) => when(b[0]) - when(a[0]));
-    const tl = $('#timeline');
-    tl.replaceChildren(...(groups.length ? groups.map(g => {
+    $('#timeline').replaceChildren(...(groups.length ? groups.slice(0, pageN).map(g => {
       const v = el('section', 'visit glass');
       const h = el('div', 'visit-h');
-      const start = when(g[0]), mins = Math.max(1, Math.round((when(g[g.length - 1]) - start) / 60000));
-      h.append(el('b', '', `${low(fmtDay.format(start))}, ${low(fmtTime.format(start))}`), el('span', '', `on her ${g[0].device} · stayed ~${mins} min · ${g.length} moments`));
-      if (String(g[0].session).startsWith('p-')) h.append(el('span', 'tag', 'your preview'));
-      const ol = el('ol');
+      const all = list.filter(e => e.session === g[0].session);
+      const start = when(all[0] || g[0]), end = all.reduce((m, e) => Math.max(m, +when(e)), +start);
+      const mins = Math.max(1, Math.round((end - start) / 60000));
+      h.append(el('b', '', `${low(fmtDay.format(start))}, ${low(fmtTime.format(start))}`), el('span', '', `on her ${g[0].device} · stayed ~${mins} min · ${plural(g.length, 'moment')}`));
+      const sid = g[0].session;
+      if (String(sid).startsWith('p-')) h.append(el('span', 'tag', 'your preview'));
+      else {
+        if (meSessions.has(sid)) h.append(el('span', 'tag', 'you'));
+        const b = el('button', 'me-btn', meSessions.has(sid) ? 'not me, it was her' : 'that was me 🙋‍♂️');
+        b.addEventListener('click', () => {
+          meSessions.has(sid) ? meSessions.delete(sid) : meSessions.add(sid);
+          store.set('diary-mine', [...meSessions]);
+          toast(meSessions.has(sid) ? "hidden from her stats. (tick 'show my own previews' to see it)" : 'okay, counting it as hers again 💗');
+          render();
+        });
+        h.append(b);
+      }
+      const ol = el('ol', 'tl');
       for (const e of g) {
         const [emo, line] = say(e);
         const li = el('li');
@@ -283,26 +479,64 @@
       }
       v.append(h, ol);
       return v;
-    }) : [el('p', 'empty glass', "she hasn't opened it yet. soon ♡")]));
+    }) : [el('p', 'empty glass', cat === 'all' ? "she hasn't opened it yet. soon ♡" : 'nothing in this one yet ♡')]));
+    $('#moreBtn').hidden = groups.length <= pageN;
     all.forEach(e => seen.add(e.id));
   }
 
+  // ---------------- a gentle ping when she does something ----------------
+  let pingOn = store.get('diary-ping', false);
+  let actx = null;
+  function chime() {
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      [659, 880].forEach((f, i) => {
+        const o = actx.createOscillator(), g = actx.createGain(), t = actx.currentTime + i * .14;
+        o.frequency.value = f; o.type = 'sine';
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.18, t + .02); g.gain.exponentialRampToValueAtTime(.001, t + .5);
+        o.connect(g).connect(actx.destination); o.start(t); o.stop(t + .55);
+      });
+    } catch {}
+  }
+  function pingUI() { $('#pingBtn').classList.toggle('on', pingOn); $('#pingBtn').textContent = pingOn ? '🔔 pings on' : '🔔 ping me when she does something'; }
+  pingUI();
+  $('#pingBtn').addEventListener('click', async () => {
+    if (pingOn) { pingOn = false; store.set('diary-ping', false); pingUI(); return; }
+    chime();
+    if ('Notification' in window) {
+      const p = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission().catch(() => 'denied');
+      pingOn = p === 'granted';
+    }
+    if (!pingOn) toast('your browser said no to notifications. i\'ll still chime while this page is open 🔔', 4200);
+    pingOn = true;
+    store.set('diary-ping', true);
+    pingUI();
+  });
+  function ping(e) {
+    const [emo, line] = say(e);
+    toast(`${emo} ${line}`);
+    document.title = '💗 she did something!';
+    setTimeout(() => { document.title = 'her little diary 📖'; }, 6000);
+    if (!pingOn) return;
+    chime();
+    if ('Notification' in window && Notification.permission === 'granted' && document.hidden) {
+      try { new Notification('arushi 💗', { body: `${emo} ${line}${WORDS[e.type] ? `\n“${e.text}”` : ''}`, icon: 'img/icon-192.png', tag: e.id }); } catch {}
+    }
+  }
+
+  // ---------------- data ----------------
   function watch() {
-    unsub = onSnapshot(query(collection(db, 'logs'), orderBy('at', 'desc'), limit(1500)), snap => {
+    unsub = onSnapshot(query(collection(db, 'logs'), orderBy('at', 'desc'), limit(2000)), snap => {
       all = snap.docs.map(d => ({ id: d.id, ...d.data({ serverTimestamps: 'estimate' }) }));
       if (!first) {
-        const fresh = snap.docChanges().filter(c => c.type === 'added').map(c => ({ id: c.doc.id, ...c.doc.data({ serverTimestamps: 'estimate' }) }));
-        const hers = fresh.find(e => !String(e.session).startsWith('p-'));
-        if (hers) {
-          toast(`${say(hers)[0]} ${say(hers)[1]}`);
-          document.title = '💗 she did something!';
-          setTimeout(() => { document.title = 'her little diary 📖'; }, 5000);
-        }
+        snap.docChanges().filter(c => c.type === 'added').map(c => ({ id: c.doc.id, ...c.doc.data({ serverTimestamps: 'estimate' }) }))
+          .filter(e => !String(e.session).startsWith('p-')).slice(0, 3).forEach(ping);
       }
       render();
       first = false;
     }, err => toast(`couldn't load: ${err.code || err.message}`, 5000));
   }
+  setInterval(() => { if (!first) render(); }, 30000); // keeps "she's here right now" honest
 
   onAuthStateChanged(auth, user => {
     $('#login').hidden = !!user;
@@ -318,11 +552,12 @@
   });
   $('#outBtn').addEventListener('click', () => signOut(auth));
   $('#showMine').addEventListener('change', render);
+  $('#moreBtn').addEventListener('click', () => { pageN += 6; render(); });
   $('#pwBtn').addEventListener('click', () => { $('#pwForm').hidden = !$('#pwForm').hidden; });
   $('#pwForm').addEventListener('submit', async e => {
     e.preventDefault();
     try { await updatePassword(auth.currentUser, $('#newPw').value); $('#newPw').value = ''; $('#pwForm').hidden = true; toast('password changed 🔐'); }
-    catch (err) { toast(err.code === 'auth/requires-recent-login' ? 'sign out and back in first, then try again' : 'that password didn\'t work (6+ characters)', 4000); }
+    catch (err) { toast(err.code === 'auth/requires-recent-login' ? 'sign out and back in first, then try again' : "that password didn't work (6+ characters)", 4000); }
   });
   $('#clearBtn').addEventListener('click', async () => {
     if (!confirm('delete every entry in her diary? this cannot be undone.')) return;

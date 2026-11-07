@@ -537,6 +537,15 @@
     if (letterOpen) return;
     letterOpen = true;
     log('letter_open');
+    // when the signature scrolls into view, she has read all of it
+    const t0 = Date.now();
+    const readIO = new IntersectionObserver(es => {
+      if (!es[0].isIntersecting || Date.now() - t0 < 8000) return;
+      readIO.disconnect();
+      const m = Math.round((Date.now() - t0) / 60000);
+      log('letter_done', '', m < 1 ? 'under a minute' : `${m} min`);
+    }, { threshold: 1 });
+    setTimeout(() => readIO.observe($('.bl-sign')), 4000);
     env.classList.add('open');
     setTimeout(() => heartsConf({ particleCount: 60, spread: 90, startVelocity: 34, origin: at(env) }), 650);
     setTimeout(() => {
