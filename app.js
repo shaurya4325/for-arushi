@@ -62,6 +62,8 @@
     'i love you till the end ♾️',
     'i love you like i love you',
     'meri rasmalai 🥹',
+    'you owe me a kiss. don\'t ask why 😌',
+    'is it just me or did you get cuter today?',
   ];
   const POPS = [
     'happy birthday, birthday girl 🎂', 'i love you so much, arushi 💗', "you're my everything", 'you are my world 🌍',
@@ -69,6 +71,8 @@
     'my favourite notification is you', 'thinking about you rn (and always)', 'muah! 😚',
     'best thing that ever happened to me', "you're my home 🏡", 'you + me = forever',
     'my mastikhor biwi hehe 😜', 'cutie patootie alert 🚨', "you're prettier than this whole website",
+    'careful, smile like that again and i\'ll need another kiss 😚', 'everyone else is in second place. sorry, rules 🏆',
+    'you can\'t be this pretty and expect me to concentrate', 'i\'d choose you in every lifetime 🌙',
   ];
   const HCOL = ['#ff5d8f', '#ff8fab', '#ffb3c6', '#ff7aa2', '#f7a1c4', '#ffbfa3', '#e4a8ff'];
   const PARTY = ['#ff5d8f', '#ffd166', '#7fd4c1', '#b79cff', '#ff9f6e', '#8fc6ff'];
@@ -98,19 +102,7 @@
     { id: 'p102', cap: "ma'am pls 😮‍💨", x: 66.5, y: 3, r: 8, z: .45, f: 'tape', w: .75, desk: 1 },
   ];
 
-  const REASONS = [
-    'your smile fixes my worst days',
-    "you're my safe place 🏡",
-    'the way you say my name 🥹',
-    'my mastikhor biwi hehe 😜',
-    'your goofy filter selfies 📸',
-    'you make me want to be better',
-    'every call with you ends too soon',
-    'you chose me. out of everyone 🥺',
-    "you're my forever. simple ♾️",
-  ];
   const BCOL = ['#ff5d8f', '#ffb347', '#b79cff', '#7fd4c1', '#ff8fab', '#ffd166', '#8fc6ff', '#ff7a7a', '#e4a8ff'];
-  const PAIR_IDS = ['p94', 'p82', 'p55', 'p85', 'p10', 'p9'];
 
   const LETTERS = [
     { e: '🥺', t: "open when you're sad", c: '#ffc9d9', s: 'rgba(255,110,155,.45)',
@@ -763,197 +755,13 @@
     if (Math.abs(dx) > 50) showLb(lbIdx + (dx < 0 ? 1 : -1));
   });
 
-  // ---------------- birthday games ----------------
-  const gtabs = $$('.gpick [role=tab]');
-  let curG = gtabs[0];
-  function selectGame(btn, focus) {
-    if (btn === curG) return;
-    gtabs.forEach(t => {
-      const on = t === btn, panel = $(`#${t.getAttribute('aria-controls')}`);
-      t.setAttribute('aria-selected', on);
-      t.tabIndex = on ? 0 : -1;
-      panel.hidden = !on;
-      if (on) { panel.classList.remove('enter'); void panel.offsetWidth; panel.classList.add('enter'); }
-    });
-    curG = btn;
-    log('game', btn.textContent.trim());
-    if (focus) btn.focus();
-    if (btn.id === 'g-scratch') paintScratch();
-  }
-  gtabs.forEach(t => t.addEventListener('click', () => selectGame(t)));
-  $('.gpick').addEventListener('keydown', e => {
-    const i = gtabs.indexOf(curG);
-    if (e.key === 'ArrowRight') selectGame(gtabs[(i + 1) % gtabs.length], true);
-    else if (e.key === 'ArrowLeft') selectGame(gtabs[(i - 1 + gtabs.length) % gtabs.length], true);
-  });
-
-  // 1. nine balloons, nine reasons
-  const balloonsEl = $('#balloons'), bCount = $('#bCount'), bEnd = $('#bEnd');
-  let bPopped = 0;
-  function buildBalloons() {
-    balloonsEl.innerHTML = '';
-    bPopped = 0;
-    bCount.textContent = `0 / ${REASONS.length} popped`;
-    bEnd.hidden = true;
-    REASONS.forEach((reason, i) => {
-      const slot = document.createElement('div');
-      slot.className = 'bslot';
-      const b = document.createElement('button');
-      b.className = 'balloon';
-      b.style.cssText = `--bc:${BCOL[i]};--t:${rand(2.8, 3.8).toFixed(2)}s;--d:${(-rand(0, 3)).toFixed(2)}s`;
-      b.setAttribute('aria-label', `pop balloon ${i + 1}`);
-      const tag = document.createElement('p');
-      tag.className = 'btag';
-      tag.innerHTML = `<span>reason #${i + 1}</span>`;
-      tag.append(reason);
-      b.addEventListener('click', () => {
-        if (slot.classList.contains('open')) return;
-        confetti({ particleCount: 28, spread: 75, startVelocity: 24, scalar: .8, ticks: 140, origin: at(b), colors: [BCOL[i], '#ffffff', '#ffd166'] });
-        slot.classList.add('open');
-        b.setAttribute('aria-label', `balloon ${i + 1} popped: ${reason}`);
-        bPopped++;
-        log('balloon', reason, `#${i + 1}`);
-        bCount.textContent = `${bPopped} / ${REASONS.length} popped`;
-        if (bPopped === REASONS.length) setTimeout(() => {
-          bEnd.hidden = false;
-          log('balloons_all');
-          heartsConf({ particleCount: 90, spread: 120, origin: at(balloonsEl) });
-        }, 600);
-      });
-      slot.append(b, tag);
-      balloonsEl.appendChild(slot);
-    });
-  }
-  buildBalloons();
-  $('#bAgain').addEventListener('click', buildBalloons);
-
-  // 2. the scratch card
-  const sc = $('#scratchCvs'), sctx = sc.getContext('2d');
-  let scPainted = false, scDone = false, scDown = false, scLast = null, scMoves = 0;
-  function paintScratch() {
-    if (scPainted) return;
-    const r = sc.getBoundingClientRect();
-    if (!r.width) return;
-    scPainted = true;
-    const dpr = Math.min(devicePixelRatio || 1, 2), w = r.width, h = r.height;
-    sc.width = Math.round(w * dpr);
-    sc.height = Math.round(h * dpr);
-    sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const g = sctx.createLinearGradient(0, 0, w, h);
-    g.addColorStop(0, '#f5b3c7'); g.addColorStop(.3, '#ffe4ec'); g.addColorStop(.5, '#e796ae'); g.addColorStop(.75, '#ffd9e4'); g.addColorStop(1, '#eda2b9');
-    sctx.fillStyle = g;
-    sctx.fillRect(0, 0, w, h);
-    for (let i = 0; i < 420; i++) {
-      sctx.fillStyle = `rgba(255,255,255,${rand(.15, .75).toFixed(2)})`;
-      sctx.fillRect(rand(0, w), rand(0, h), 1.6, 1.6);
-    }
-    sctx.textAlign = 'center';
-    sctx.fillStyle = 'rgba(190,30,80,.16)';
-    sctx.font = '22px sans-serif';
-    for (let y = 30, row = 0; y < h + 20; y += 46, row++) for (let x = row % 2 ? 50 : 20; x < w + 20; x += 60) sctx.fillText('♥', x, y);
-    sctx.fillStyle = 'rgba(255,250,252,.82)';
-    sctx.beginPath();
-    sctx.roundRect ? sctx.roundRect(w / 2 - 138, h / 2 - 50, 276, 100, 22) : sctx.rect(w / 2 - 138, h / 2 - 50, 276, 100);
-    sctx.fill();
-    sctx.fillStyle = '#b8264f';
-    sctx.font = '700 30px Fredoka, sans-serif';
-    sctx.fillText('scratch me ✨', w / 2, h / 2 - 6);
-    sctx.font = '700 23px Caveat, cursive';
-    sctx.fillText('your birthday gift is under here', w / 2, h / 2 + 28);
-  }
-  function scratchAt(x, y) {
-    const r = sc.getBoundingClientRect(), px = x - r.left, py = y - r.top;
-    sctx.globalCompositeOperation = 'destination-out';
-    sctx.lineWidth = 46;
-    sctx.lineCap = sctx.lineJoin = 'round';
-    sctx.beginPath();
-    sctx.moveTo(...(scLast || [px - .1, py]));
-    sctx.lineTo(px, py);
-    sctx.stroke();
-    sctx.globalCompositeOperation = 'source-over';
-    scLast = [px, py];
-    if (++scMoves % 10 === 0) checkScratch();
-  }
-  function checkScratch() {
-    if (scDone || !sc.width) return;
-    const d = sctx.getImageData(0, 0, sc.width, sc.height).data;
-    let clear = 0, n = 0;
-    for (let i = 3; i < d.length; i += 4 * 23) { n++; if (d[i] < 128) clear++; }
-    if (clear / n > .5) finishScratch();
-  }
-  function finishScratch() {
-    scDone = true;
-    log('scratch_done');
-    sc.classList.add('gone');
-    $('#scratchTxt').textContent = "yayyy 🎉 screenshot it and send it to me. it's legally binding 📸";
-    heartsConf({ particleCount: 90, spread: 100, startVelocity: 38, origin: at(sc) });
-  }
-  sc.addEventListener('pointerdown', e => {
-    if (scDone) return;
-    paintScratch();
-    scDown = true;
-    scLast = null;
-    try { sc.setPointerCapture(e.pointerId); } catch {}
-    scratchAt(e.clientX, e.clientY);
-  });
-  sc.addEventListener('pointermove', e => { if (scDown) scratchAt(e.clientX, e.clientY); });
-  const scUp = () => { if (!scDown) return; scDown = false; scLast = null; checkScratch(); };
-  sc.addEventListener('pointerup', scUp);
-  sc.addEventListener('pointercancel', scUp);
-
-  // 3. find the pairs
-  const pairsEl = $('#pairs'), pEnd = $('#pEnd');
-  let pFirst = null, pLock = false, pMoves = 0, pFound = 0;
-  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-  function pairsText() {
-    $('#pFound').textContent = `${pFound} / ${PAIR_IDS.length} pairs`;
-    $('#pMoves').textContent = plural(pMoves, 'move');
-  }
-  function buildPairs() {
-    pairsEl.innerHTML = '';
-    pFirst = null; pLock = false; pMoves = 0; pFound = 0;
-    pEnd.hidden = true;
-    pairsText();
-    shuffle([...PAIR_IDS, ...PAIR_IDS]).forEach((id, i) => {
-      const c = document.createElement('button');
-      c.className = 'pcard';
-      c.dataset.id = id;
-      c.setAttribute('aria-label', `card ${i + 1}, face down`);
-      c.innerHTML = `<span class="pi"><span class="pface pback">A♡</span><span class="pface pfront" style="background-image:url(img/t/${id}.webp)"></span></span>`;
-      c.addEventListener('click', () => flipCard(c, i));
-      pairsEl.appendChild(c);
-    });
-  }
-  function flipCard(c, i) {
-    if (pLock || c === pFirst || c.classList.contains('done')) return;
-    c.classList.add('flip');
-    c.setAttribute('aria-label', `card ${i + 1}, a photo of arushi`);
-    if (!pFirst) { pFirst = c; return; }
-    const a = pFirst;
-    pFirst = null;
-    pMoves++;
-    if (a.dataset.id === c.dataset.id) {
-      a.classList.add('done');
-      c.classList.add('done');
-      pFound++;
-      heartsConf({ particleCount: 16, spread: 60, startVelocity: 18, scalar: 1.2, ticks: 120, origin: at(c) });
-      if (pFound === PAIR_IDS.length) setTimeout(() => {
-        $('#pWinTxt').textContent = `you found every pair in ${plural(pMoves, 'move')} 🎉`;
-        pEnd.hidden = false;
-        log('pairs_win', '', pMoves);
-        cannons(1300);
-      }, 650);
-    } else {
-      pLock = true;
-      setTimeout(() => {
-        [a, c].forEach(x => { x.classList.remove('flip'); x.setAttribute('aria-label', 'card, face down'); });
-        pLock = false;
-      }, 850);
-    }
-    pairsText();
-  }
-  buildPairs();
-  $('#pAgain').addEventListener('click', buildPairs);
+  // ---------------- shared with games.js (the kiss booth, the flirt arcade, the reel) ----------------
+  window.LOVE = {
+    $, $$, rand, pick, sleep, reduced, fine, store, log, toast, burst, particle, rain, confetti, heartsConf, cannons, at, plural,
+    lightbox: src => openLightbox(src),
+    addPhoto: (src, cap) => { if (!gallery.some(g => g.src === src)) gallery.push({ src, cap }); },
+    buzz: p => { try { navigator.vibrate && navigator.vibrate(p); } catch {} },
+  };
 
   // ---------------- open when… (claymorphism) ----------------
   const readLetters = store.get('arushi-read', []);
@@ -1387,7 +1195,7 @@
   }
   addEventListener('pointerdown', e => {
     if (!entered) return;
-    if (e.target.closest('a,button,input,form,.pola,.stack,.lightbox,.modal,.dock,.scratch,.name,.bletter')) return;
+    if (e.target.closest('a,button,input,form,.pola,.stack,.lightbox,.modal,.dock,.gstage,.kstage,.reel,.sheet,.name,.bletter')) return;
     if (!tryPop(e.clientX, e.clientY)) burst(e.clientX, e.clientY, 6, 55);
   });
 

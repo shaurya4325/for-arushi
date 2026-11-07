@@ -206,6 +206,17 @@
     float_balloon: e => ['🎈', `she popped a floating balloon: ${q(e.text)}`],
     mood: () => ['🥹', 'she told you how her heart feels'],
     song: e => ['🎵', e.detail === 'play' ? 'alfaaz is playing' : 'she paused alfaaz'],
+    kiss_no: e => ['🙅‍♀️', `she tried to press “no” (attempt #${e.detail}). the button ran away 😌`],
+    kiss_yes: e => ['💋', e.detail === '1' ? 'she said YES to your birthday kiss 💋' : `she asked for another kiss (kiss #${e.detail})`],
+    kiss_back: e => ['😘', e.detail === '1' ? 'she kissed you back 😳' : `she kissed you back again (#${e.detail})`],
+    catch_score: e => ['🎯', `she caught ${e.detail} of your kisses in “catch my kisses”`],
+    thisorthat: e => ['💘', `this or that: ${e.text}. she picked ${q(e.detail)}`],
+    dare_spin: e => ['🎡', `she spun the dare wheel and got ${q(e.text)}`],
+    dare: e => ['🎡', e.detail === 'accepted' ? `she ACCEPTED the dare ${q(e.text)}. check your phone 👀` : `she chickened out of ${q(e.text)} 🐔 (she owes you 2 kisses)`],
+    quiz: e => ['🤓', `quiz: ${q(e.text)} she answered ${q(e.detail)}`],
+    quiz_done: e => ['🏅', `she finished the shaurya quiz with ${e.detail}/7`],
+    install: () => ['📲', 'she saved the site to her home screen'],
+    opened_app: () => ['📲', 'she opened it from her home screen'],
   };
   const WORDS = { wish: 'her wish 🏮', reply: 'her letter to you ✍️', mood: 'her heart right now 🥹' };
   const say = e => (SAY[e.type] || (() => ['♡', `${e.type} ${e.text}`]))(e);
@@ -233,7 +244,9 @@
       [count('kiss') + count('letter_kiss'), 'kisses for you 💋'],
       [count('wish'), 'wishes sent 🏮'],
       [redeemed.size, 'coupons to honour 🎟️'],
-      [count('balloon') + count('heart') + count('float_balloon'), 'things she popped 🎈'],
+      [count('kiss_yes') + count('kiss_back'), 'booth kisses 😘'],
+      [count('dare') , 'dares answered 🎡'],
+      [count('heart') + count('float_balloon'), 'things she popped 🎈'],
     ].map(([n, label]) => { const d = el('div', 'stat'); d.append(el('b', '', n), el('span', '', label)); return d; }));
 
     const words = $('#words');

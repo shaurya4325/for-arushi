@@ -7,12 +7,18 @@
 <meta name="description" content="a tiny corner of the internet, made only for arushi, for her birthday.">
 <meta name="robots" content="noindex, nofollow, noimageindex">
 <meta name="theme-color" content="#ffdbe5">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="arushi ♡">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="color-scheme" content="light">
 <link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%82%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fredoka:wght@400;500;600;700&family=Great+Vibes&family=VT323&display=swap">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 <link rel="preload" as="image" href="img/t/p8.webp">
 </head>
 <body class="locked">
@@ -125,6 +131,54 @@
     </div>
   </section>
 
+  <!-- the photobooth: he walks in and kisses her (cut out of our real photobooth picture) -->
+  <section class="sec kiss-sec" id="kiss">
+    <div class="wrap kiss-wrap">
+      <h2 class="sec-title rv">one birthday <span class="s">kiss</span></h2>
+      <p class="sec-sub rv">if kisses were stars, i'd give you the whole night sky. but let's start with one.</p>
+      <div class="booth rv">
+        <div class="stamp-photo">
+          <div class="kstage" id="kstage">
+            <span class="k-heart" aria-hidden="true">♥</span>
+            <svg class="k-cherry" viewBox="0 0 60 70" aria-hidden="true"><path d="M30 6c-6 2-10 6-12 10M30 6c5 3 9 6 11 11M30 6c-2-3-6-4-9-2 3 1 6 2 9 2zm0 0c2-3 6-4 9-2-3 1-6 2-9 2zM18 16c-2 10-4 18-4 26M41 17c1 9 2 17 2 25" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="14" cy="52" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="43" cy="52" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            <div class="k-layer k-her" id="kHer">
+              <img src="img/us/kiss-her.webp" alt="arushi with her eyes closed, smiling, waiting" draggable="false">
+              <i class="k-blush b1"></i><i class="k-blush b2"></i>
+              <p class="k-bubble" id="kHerSay"></p>
+            </div>
+            <div class="k-layer k-him" id="kHim">
+              <img src="img/us/kiss-him.webp" alt="shaurya leaning in to kiss her cheek" draggable="false">
+              <i class="k-blush b3"></i><b class="k-lip" aria-hidden="true">💋</b>
+              <p class="k-bubble" id="kHimSay"></p>
+            </div>
+            <b class="k-mwah" id="kMwah" aria-hidden="true">mwah!</b>
+            <i class="k-flash" id="kFlash"></i>
+            <span class="k-date" id="kDate" aria-hidden="true">09.11.2026 ♡</span>
+          </div>
+        </div>
+      </div>
+      <div class="k-ask" id="kAsk">
+        <p class="k-q" id="kQ">may i kiss the birthday girl? 🥺</p>
+        <div class="k-btns" id="kBtns">
+          <button class="k-yes" id="kYes">yes 💋</button>
+          <button class="k-no" id="kNo">no</button>
+        </div>
+      </div>
+      <div class="k-after" id="kAfter" hidden>
+        <p class="k-line" id="kLine" aria-live="polite"></p>
+        <div class="k-btns">
+          <button class="k-yes" id="kAgain">again 😚</button>
+          <button class="k-back" id="kBack">kiss him back 💋</button>
+        </div>
+        <p class="k-count" id="kCount"></p>
+      </div>
+      <div class="sheet" id="sheet" hidden>
+        <p class="sheet-k">the photobooth caught everything 📸</p>
+        <div class="sheet-grid" id="sheetGrid"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- neumorphism: the counter -->
   <section class="sec neu-sec" id="us">
     <div class="wrap">
@@ -150,6 +204,8 @@
           <p id="bdayText">today the biggest happiness of my life was born.</p>
         </div>
       </div>
+      <h3 class="reel-title rv">us, frame by frame <span>swipe →</span></h3>
+      <div class="reel rv" id="reel" tabindex="0" aria-label="photos of us together"></div>
     </div>
   </section>
 
@@ -209,45 +265,81 @@
     </div>
   </section>
 
-  <!-- birthday games -->
+  <!-- flirt arcade: four little games, all rigged in my favour -->
   <section class="sec play-sec" id="play">
     <div class="wrap">
       <h2 class="sec-title rv">let's play, <span class="s">birthday girl</span></h2>
-      <p class="sec-sub rv">three tiny games. every single one of them ends with me loving you. i don't make the rules. (i do.)</p>
+      <p class="sec-sub rv">four tiny games. some cute, some flirty, all of them rigged in my favour 😌</p>
       <div class="gpick rv" role="tablist" aria-label="birthday games">
-        <button role="tab" id="g-balloons" aria-controls="gp-balloons" aria-selected="true"><span>🎈</span>pop the balloons</button>
-        <button role="tab" id="g-scratch" aria-controls="gp-scratch" aria-selected="false" tabindex="-1"><span>🎁</span>scratch your gift</button>
-        <button role="tab" id="g-pairs" aria-controls="gp-pairs" aria-selected="false" tabindex="-1"><span>🃏</span>find the pairs</button>
+        <button role="tab" id="g-catch" aria-controls="gp-catch" aria-selected="true"><span>💋</span>catch my kisses</button>
+        <button role="tab" id="g-swipe" aria-controls="gp-swipe" aria-selected="false" tabindex="-1"><span>💘</span>this or that</button>
+        <button role="tab" id="g-dare" aria-controls="gp-dare" aria-selected="false" tabindex="-1"><span>🎡</span>spin a dare</button>
+        <button role="tab" id="g-quiz" aria-controls="gp-quiz" aria-selected="false" tabindex="-1"><span>🤓</span>shaurya quiz</button>
       </div>
       <div class="gstage glass rv">
-        <div class="gpanel" role="tabpanel" id="gp-balloons" aria-labelledby="g-balloons">
-          <p class="g-top"><b id="bCount">0 / 9 popped</b> · nine balloons for the 9th of november. each one is hiding something.</p>
-          <div class="balloons" id="balloons"></div>
-          <div class="g-end" id="bEnd" hidden>
-            <p>that's 9 reasons. i have about 9 million more 🤭</p>
-            <button class="g-again" id="bAgain">blow them up again ↺</button>
-          </div>
-        </div>
-        <div class="gpanel" role="tabpanel" id="gp-scratch" aria-labelledby="g-scratch" hidden>
-          <div class="scratch" id="scratch">
-            <div class="prize">
-              <img src="img/t/p59.webp" alt="arushi wearing a crown of hearts">
-              <p class="prize-k">you won 🎉</p>
-              <p class="prize-t">one boyfriend. slightly obsessed. lifetime warranty. no returns, no refunds 🫶</p>
+
+        <div class="gpanel" role="tabpanel" id="gp-catch" aria-labelledby="g-catch">
+          <div class="catch" id="catch">
+            <canvas id="catchCvs" aria-label="kiss catching game. slide your finger to move"></canvas>
+            <div class="catch-hud" aria-live="off"><b id="cScore">0 💋</b><span id="cTime">30s</span><span id="cLives">💗💗💗</span></div>
+            <div class="catch-over" id="catchOver">
+              <p class="co-k">catch my kisses</p>
+              <p class="co-t" id="coText">i'm throwing kisses. catch them with your kissy face. 💋 and 🌹 are mine, 💔 is not. dodge those.</p>
+              <p class="co-best" id="coBest"></p>
+              <button class="g-again" id="cStart">start 💋</button>
             </div>
-            <canvas id="scratchCvs" aria-label="scratch card. rub it to reveal your gift"></canvas>
           </div>
-          <p class="g-top g-under" id="scratchTxt">rub the card with your finger ✨</p>
+          <p class="g-top g-under">slide your finger (or just tap where you want to go)</p>
         </div>
-        <div class="gpanel" role="tabpanel" id="gp-pairs" aria-labelledby="g-pairs" hidden>
-          <p class="g-top"><b id="pFound">0 / 6 pairs</b> · <span id="pMoves">0 moves</span> · flip two at a time</p>
-          <div class="pairs" id="pairs"></div>
-          <div class="g-end" id="pEnd" hidden>
-            <p id="pWinTxt">you found every pair 🎉</p>
-            <p class="g-soft">i found mine the day i found you 💞</p>
-            <button class="g-again" id="pAgain">play again ↺</button>
+
+        <div class="gpanel" role="tabpanel" id="gp-swipe" aria-labelledby="g-swipe" hidden>
+          <p class="g-top"><b id="swCount">1 / 12</b> · swipe the card, or tap a side. no wrong answers. (some are more right than others.)</p>
+          <div class="swipe" id="swipe"></div>
+          <div class="sw-btns" id="swBtns">
+            <button id="swA"></button>
+            <button id="swB"></button>
+          </div>
+          <p class="g-say" id="swSay" aria-live="polite"></p>
+          <div class="g-end" id="swEnd" hidden>
+            <p>all your answers went straight to my heart (and my notes app) 📝</p>
+            <p class="g-soft">thank you for the intel, ma'am 😌</p>
+            <button class="g-again" id="swAgain">play again ↺</button>
           </div>
         </div>
+
+        <div class="gpanel" role="tabpanel" id="gp-dare" aria-labelledby="g-dare" hidden>
+          <p class="g-top">spin it. whatever it lands on, you have to do it. (birthday rules, very official.)</p>
+          <div class="wheel-wrap">
+            <span class="wheel-pin" aria-hidden="true"></span>
+            <div class="wheel" id="wheel" aria-hidden="true"></div>
+            <button class="wheel-btn" id="spin">spin</button>
+          </div>
+          <div class="dare" id="dare" hidden>
+            <p class="dare-k">your dare 🎡</p>
+            <p class="dare-t" id="dareT"></p>
+            <div class="dare-row">
+              <button class="g-again" id="dareYes">dare accepted ✅</button>
+              <button class="dare-no" id="dareNo">chicken out 🐔</button>
+            </div>
+          </div>
+          <p class="g-say" id="dareSay" aria-live="polite"></p>
+        </div>
+
+        <div class="gpanel" role="tabpanel" id="gp-quiz" aria-labelledby="g-quiz" hidden>
+          <div class="quiz" id="quiz">
+            <p class="g-top"><b id="qNum">question 1 / 7</b> · how well do you know your boyfriend?</p>
+            <p class="q-q" id="qQ"></p>
+            <div class="q-opts" id="qOpts"></div>
+            <p class="g-say" id="qSay" aria-live="polite"></p>
+            <button class="g-again" id="qNext" hidden>next →</button>
+          </div>
+          <div class="g-end" id="qEnd" hidden>
+            <p id="qScore"></p>
+            <p class="g-soft">certified shaurya expert 🏅 (the test was rigged. every answer leads to you anyway 💘)</p>
+            <button class="g-again" id="qAgain">take it again ↺</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -360,6 +452,10 @@
           </div>
           <p class="mood-say" id="moodSay" aria-live="polite"></p>
         </div>
+        <div class="home-add" id="homeAdd" hidden>
+          <button class="kiss-btn" id="homeBtn">keep me on your home screen 📲</button>
+          <p class="home-how" id="homeHow" aria-live="polite"></p>
+        </div>
       </div>
     </div>
     <footer class="foot">
@@ -374,9 +470,10 @@
   <span class="dock-ind" aria-hidden="true"></span>
   <a href="#home" data-sec="home" aria-label="top">🎂<em>birthday girl</em></a>
   <a href="#letter" data-sec="letter" aria-label="your letter">💌<em>your letter</em></a>
+  <a href="#kiss" data-sec="kiss" aria-label="a birthday kiss">😘<em>a kiss</em></a>
   <a href="#us" class="desk-only" data-sec="us" aria-label="us">⏳<em>us</em></a>
-  <a href="#obsessed" data-sec="obsessed" aria-label="obsessed">💖<em>obsessed</em></a>
-  <a href="#play" data-sec="play" aria-label="games">🎈<em>games</em></a>
+  <a href="#obsessed" class="desk-only" data-sec="obsessed" aria-label="obsessed">💖<em>obsessed</em></a>
+  <a href="#play" data-sec="play" aria-label="games">🎮<em>games</em></a>
   <a href="#openwhen" class="desk-only" data-sec="openwhen" aria-label="open when">✉️<em>open when</em></a>
   <a href="#meter" data-sec="meter" aria-label="love-o-meter">🧪<em>love-o-meter</em></a>
   <a href="#coupons" class="desk-only" data-sec="coupons" aria-label="coupons">🎟️<em>coupons</em></a>
@@ -415,6 +512,7 @@
 <audio id="song" src="alfaaz.mp3#t=61" preload="none"></audio>
 
 <script src="vendor/confetti.js"></script>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
+<script src="games.js?v=5"></script>
 </body>
 </html>
