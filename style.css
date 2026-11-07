@@ -1549,7 +1549,7 @@ p, h1, h2 { text-wrap: pretty; }
 button, a, .pola, .balloon, .pcard, .candle { touch-action: manipulation; }
 
 @media (max-width: 720px) {
-  .hero { min-height: max(100svh, 840px); }
+  .hero { min-height: max(100svh, 1080px); }
   .sec-title { margin-bottom: .4em; }
   .kiss-btn { padding: 16px 22px; font-size: 17px; white-space: nowrap; }
   .letter-sec .bletter { --pad-l: 22px; padding: 62px 18px 30px var(--pad-l); }
@@ -1866,6 +1866,8 @@ button, a, .pola, .balloon, .pcard, .candle { touch-action: manipulation; }
 @keyframes stBreathe { 50% { transform: scale(1.06); opacity: .85; } }
 .st-plant { animation: stSway var(--t) ease-in-out var(--d) infinite; }
 @keyframes stSway { 0%, 100% { transform: rotate(-2.5deg); } 50% { transform: rotate(2.5deg); } }
+.st-shine { transform-box: fill-box; transform-origin: center; animation: stShine 1.1s ease-in-out infinite; }
+@keyframes stShine { 50% { transform: scale(1.35); opacity: .75; } }
 .st-pop { font-family: var(--ui); font-size: 15px; font-weight: 700; text-anchor: middle; opacity: 0; animation: stPop 2.4s ease-out var(--d) forwards; }
 .st-pop.heart { fill: #ff4f87; font-size: 17px; }
 .st-pop.spark { fill: #ffc94d; font-size: 14px; }

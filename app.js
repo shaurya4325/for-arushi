@@ -88,18 +88,18 @@
   ];
 
   const COLLAGE = [
-    { id: 'p10', cap: 'my pretty girl ♡', x: 2, y: 6, mx: 2, my: 3, r: -7, z: .9, f: 'tape', w: 1, hat: 1 },
-    { id: 'p114', cap: 'ufff 🥹', x: 85, y: 5, mx: 70, my: 4, r: 6, z: .7, f: 'pin', w: 1 },
-    { id: 'p24', cap: 'the main character', x: 14, y: 20, mx: 37, my: 1, r: 5, z: .5, f: 'glass', w: .9 },
-    { id: 'p92', cap: 'birthday girl hiii', x: 74, y: 21, mx: 3, my: 75, r: -5, z: .6, f: 'clay', w: .9, hat: 1 },
-    { id: 'p9', cap: 'my whole heart', x: 3, y: 41, mx: 37, my: 78, r: 4, z: 1, f: 'plain', w: 1.05 },
-    { id: 'p128', cap: 'kissed by snapchat (jealous)', x: 86, y: 38, mx: 69, my: 76, r: -6, z: .85, f: 'tape', w: 1.05, hat: 1 },
+    { id: 'p10', cap: 'my pretty girl ♡', x: 2, y: 6, mx: 2, my: 1.5, r: -7, z: .9, f: 'tape', w: 1, hat: 1 },
+    { id: 'p114', cap: 'ufff 🥹', x: 85, y: 5, mx: 70, my: 2, r: 6, z: .7, f: 'pin', w: 1 },
+    { id: 'p24', cap: 'the main character', x: 14, y: 20, mx: 36, my: .5, r: 5, z: .5, f: 'glass', w: .9 },
+    { id: 'p92', cap: 'birthday girl hiii', x: 74, y: 21, mx: 3, my: 71, r: -5, z: .6, f: 'clay', w: .9, hat: 1 },
+    { id: 'p9', cap: 'my whole heart', x: 3, y: 41, mx: 37, my: 72.5, r: 4, z: 1, f: 'plain', w: 1.05 },
+    { id: 'p128', cap: 'kissed by snapchat (jealous)', x: 86, y: 38, mx: 69, my: 71, r: -6, z: .85, f: 'tape', w: 1.05, hat: 1 },
     { id: 'p110', cap: 'cutest ever', x: 15, y: 62, r: -4, z: .6, f: 'pin', w: .95, desk: 1, hat: 1 },
     { id: 'p43', cap: 'night + you', x: 73, y: 58, r: 5, z: .7, f: 'glass', w: .95, desk: 1 },
-    { id: 'p35', cap: 'princess vibes 👑', x: 4, y: 77, r: 6, z: .8, f: 'clay', w: 1, desk: 1 },
-    { id: 'p32', cap: 'sunlight loves you too', x: 85, y: 73, r: -5, z: .9, f: 'plain', w: 1, desk: 1 },
-    { id: 'p81', cap: 'that pose tho', x: 22.5, y: 2, r: -9, z: .4, f: 'plain', w: .78, desk: 1 },
-    { id: 'p102', cap: "ma'am pls 😮‍💨", x: 66.5, y: 3, r: 8, z: .45, f: 'tape', w: .75, desk: 1 },
+    { id: 'p35', cap: 'princess vibes 👑', x: 4, y: 77, mx: 17, my: 85.5, r: 6, z: .8, f: 'clay', w: 1 },
+    { id: 'p32', cap: 'sunlight loves you too', x: 85, y: 73, mx: 55, my: 86.5, r: -5, z: .9, f: 'plain', w: 1 },
+    { id: 'p81', cap: 'that pose tho', x: 22.5, y: 2, mx: 17, my: 15, r: -9, z: .4, f: 'plain', w: .78 },
+    { id: 'p102', cap: "ma'am pls 😮‍💨", x: 66.5, y: 3, mx: 56, my: 16, r: 8, z: .45, f: 'tape', w: .75 },
   ];
 
   const BCOL = ['#ff5d8f', '#ffb347', '#b79cff', '#7fd4c1', '#ff8fab', '#ffd166', '#8fc6ff', '#ff7a7a', '#e4a8ff'];

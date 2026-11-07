@@ -126,8 +126,10 @@
     P.eyes = { normal: svgEl('g', {}, eyes), wide: svgEl('g', { opacity: 0 }, eyes), happy: svgEl('g', { opacity: 0 }, eyes) };
     [[4, -2], [10.5, -2]].forEach(([x, y]) => {
       svgEl('ellipse', { cx: x, cy: y, rx: 1.5, ry: 1.9, fill: C.ink }, P.eyes.normal);
-      svgEl('circle', { cx: x, cy: y - .5, r: 2.8, fill: '#fff', stroke: C.ink, 'stroke-width': .8 }, P.eyes.wide);
-      svgEl('circle', { cx: x + .4, cy: y - .3, r: 1.3, fill: C.ink }, P.eyes.wide);
+      // shocked: the same button eyes, just bigger, with a shine
+      svgEl('ellipse', { cx: x, cy: y - .4, rx: 2.5, ry: 3, fill: C.ink }, P.eyes.wide);
+      svgEl('circle', { cx: x - .8, cy: y - 1.6, r: 1, fill: '#fff', class: 'st-shine' }, P.eyes.wide);
+      svgEl('circle', { cx: x + .9, cy: y + .7, r: .5, fill: '#fff', opacity: .85 }, P.eyes.wide);
       svgEl('path', { d: `M${x - 2} ${y + .5} q2 -2.6 4 0`, fill: 'none', stroke: C.ink, 'stroke-width': 1.2, 'stroke-linecap': 'round' }, P.eyes.happy);
     });
     if (girl) svgEl('path', { d: 'M1.5 -5.5 l-2 -2 M5 -6.5 l-1 -2.4 M13 -6 l1.6 -2', stroke: C.ink, 'stroke-width': .8, 'stroke-linecap': 'round' }, P.eyes.normal);
